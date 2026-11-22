@@ -1,0 +1,1561 @@
+  <!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>启源 // 全球媒体商品爆款监听中枢</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 配置 Tailwind 自定义颜色与动画 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        radar: {
+                            bg: '#0B0F19',
+                            panel: 'rgba(17, 24, 39, 0.72)',
+                            border: 'rgba(56, 189, 248, 0.16)',
+                            cyan: '#06B6D4',
+                            neon: '#22D3EE',
+                            amber: '#F59E0B',
+                            red: '#EF4444',
+                            emerald: '#10B981',
+                            purple: '#8B5CF6'
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-in': 'slideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'flash-alert': 'flashAlert 2s ease-out forwards',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(-16px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        flashAlert: {
+                            '0%': { backgroundColor: 'rgba(239, 68, 68, 0.25)', borderColor: 'rgba(239, 68, 68, 0.8)' },
+                            '100%': { backgroundColor: 'rgba(17, 24, 39, 0.72)', borderColor: 'rgba(56, 189, 248, 0.16)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 全局暗黑作战室背景与网格纹理 */
+        body {
+            background-color: #0B0F19;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(30, 41, 59, 0.22) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 41, 59, 0.22) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+            color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        /* 玻璃拟态卡片 */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(11, 15, 25, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.25);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.5);
+        }
+
+        /* 雷达扫描光环动画 */
+        .radar-ping {
+            position: relative;
+        }
+        .radar-ping::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            border: 1px solid #22D3EE;
+            animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        /* 跨平台流动虚线动画 */
+        @keyframes dashFlow {
+            to {
+                stroke-dashoffset: -24;
+            }
+        }
+        .flow-line {
+            stroke-dasharray: 6, 6;
+            animation: dashFlow 1.2s linear infinite;
+        }
+    </style>
+<script>/* 启源·选品中枢 快照数据（离线自包含，生成时注入真数据） */
+window.__SNAPSHOT__ = {"data":[{"id":"sig_025","title":"爆款复刻创作","region":"CN","platform":"小红书","category":"综合热点","price":"—","heat_score":80,"surge_rate":162,"level":"A","trend_history":[40,43,46,49,52,55,58],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】爆款复刻创作——热点爆款内容复刻创作助手。自定义账号垂直风格→抓取平台热门/飙升爆款→拆解爆款逻辑/结构/话术→生成专属创作提示词→复刻产出同款风格内容→多维度… 来源：https://www.google.com/goto?url=CAESZQHEIkXXVwuGM6caE4yqnt460ATMPAee0ZrQ31pnhvK8oM8UrPD5rCuiUpkoE6KczVFoyj1bd9bEa7nPOJLYcSnQ6XSAKPdjN6EhjGx_ZBl-dczIE8hu5jB4_c8qyhD3pLWQaiWJ&gsessionid=JUFURmZQys-uBxGubRLum5Y5HEKSQyazQpjLcVlQq0lrCourRxsTWQ"},{"id":"sig_035","title":"“双11”收官：抖音电商释放新商机产业带源头商家跑出增长曲线","region":"CN","platform":"抖音","category":"综合热点","price":"—","heat_score":80,"surge_rate":162,"level":"A","trend_history":[40,43,46,49,52,55,58],"migration_path":["抖音情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】由平台全额出资的消费券直接补贴消费者；商品卡、搜索、店播三条路径并行，使粉丝不足一万的产业带单品商家得以凭一款爆品打开市场。这表明，实体供给的确定性正在通过 .… 来源：https://www.google.com/goto?url=CAESigEBxCJF1wWcDvorwWSK6Jezg4PziL_AIkLZnUsAJRJE9Lqcr5ir4rQ66fuw9-ASP631YcPPow-w1n0ZT8c7hhzU1AEIyr-jn_Ur95FzI28HR_UcsvGaoleDqS0FTMHUJ7yl619Uc56z-y2unemUHg0B6TqXchKtJmABqNmWgRSk99HfW94Fte5fhqM&gsessionid=ETs6f06pFjpxWDPg-q545TWzm5M6yBwizo-yYIonfuHxa4D6_zR_-Q"},{"id":"sig_002","title":"TikTok Shop美区黑五大促首周开门红，内容场全面开花！ …","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":80,"surge_rate":138,"level":"A","trend_history":[40,43,46,49,52,55,58],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】黑五首周，节庆送礼需求带动相关商品热卖，Holiday gift相关商品搜索量对比活动前超4倍增长，报名Better Price Reward玩法的商品GMV对… 来源：https://www.163.com/news/article/LC6KA1I900019UD6.html"},{"id":"sig_062","title":"“双十一”，狗衣服热销17万件！祖玛珑","region":"GLOBAL","platform":"母婴宠物情报","category":"宠物用品","price":"—","heat_score":80,"surge_rate":138,"level":"A","trend_history":[40,43,46,49,52,55,58],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】京东“双十一”半程战报也显示，10月8日至11月1日，宠物外出用品成交同比增长88%，清洁除味用品增长73%，老年宠粮增长65%。猫湿粮、狗湿粮的成交额，也分别… 来源：http://k.sina.com.cn/article_5952915720_162d24908067055vha.html"},{"id":"sig_066","title":"焕新·2026刀法年度品效峰会完整议程","region":"GLOBAL","platform":"母婴宠物情报","category":"综合热点","price":"—","heat_score":80,"surge_rate":130,"level":"A","trend_history":[40,43,46,49,52,55,58],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】一款产品卖爆之后，品牌如何找到下一轮增长？呈白没有停留在复制爆款，而是把人群战略进一步延伸到人与人之间的关系：消费者为什么买、为谁而买，又希望借产品表达什么？… 来源：https://www.google.com/goto?url=CAESYAHEIkXXKbTPJPy9bGwT7wvx25eKwoh9UCzUbZpc_ge5oLEatMX6aoXCHqn7_aKDOJV9cyHbarZJGRwrntGyJCvIuigSd6nQZkJVtWqJJYygTiOEHzo4j9teyZwzzKBdJw&gsessionid=Im-YYxu-Ee1Eo6Kh6u2T31g1BbaQ5nB9I3RqbYcLdDJ7jiF4r86yFg"},{"id":"sig_005","title":"Tiktok带货选品方法","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":76,"surge_rate":127,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】掌握TikTok带货选品攻略，精选爆款商品，提升短视频带货转化率。学习跨境电商 ... 视频讲解tiktok美区短视频带货的五种无货源方式与带货佣金、账号与店铺… 来源：https://www.google.com/goto?url=CAESmQEBxCJF1x0KvMezNbAEAXRQAirTI9t3dBiweuyI4uK9paQ8LMQhRj_MPAJBVNDEI2rDH01L2IwbgLubrjiQhTpcwtt4h9MB6lzqL_axmN06ImuvneE6I35EBqksoC5tWZhqH1iG8Fydxurmj50xWuaK_Pbauhpci6kYmn9gqlGr7uM4bTMbdrYljdwqQYdvZiAq7wnlPq9PYTI&gsessionid=Lghc3ph_LPhGUHnsd3iWu_oeZ_nxzDCg4xvLSJhQIbgH84VhNR-0UA"},{"id":"sig_030","title":"影像场景重构：从内容爆发到体验升级的产业下一程","region":"CN","platform":"小红书","category":"综合热点","price":"—","heat_score":76,"surge_rate":127,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】这不是内容质量变差了，而是观众的“内容消费场景”变了——他们不再为了“随便看看”而刷，而是带着更明确的目的：学习、放松、种草、获取情绪价值。 ... 平台方面，… 来源：https://www.google.com/goto?url=CAESbwHEIkXXNyCZR0DKyKmxSG1xzAez5uiTOhzqX2uici8PuB-T4avwuQEMO8dS9PdVgS5WcYD0F4z6Iqj9HzKdCbk65_VqAN8Zqsmj6x9cR5R7ATAPhACNHyjjTEr_V6NOl8LwfXo-jHMqI_WDqbhBfA&gsessionid=JUFURmZQys-uBxGubRLum5Y5HEKSQyazQpjLcVlQq0lrCourRxsTWQ"},{"id":"sig_050","title":"洗護髮到日常營養補給這波真的很難空手 ...","region":"GLOBAL","platform":"美妆情报","category":"综合热点","price":"—","heat_score":76,"surge_rate":127,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】Threads爆紅好物都在這 \\屈編私藏爆紅清單來啦 / 那些被網友推到不行、看了超想買的話題好物 屈編直接幫你整理成一篇！ 從美妝保養、洗護髮到日常營養補給 … 来源：https://www.google.com/goto?url=CAESjgYBxCJF106V9_EnA-3uAEbY4MEhx9R2r-VQqzDRPGkBiv7sagAiXtJl-QAvkGBWjMOtBzcra_dG13IOvbHk1ICk4rocAO5MSTnQILNzShJGYzq5pK73WWG0jATMwyoll87SxpKADa_joF6dwY-3J10rOt_ZOTAghtHBUximPeHgMBzO-JnQrQsoiFx_dIWv1WPJXCtJEHo8zhXD878lw5FCh62iP4RJa_3L0Rqab_dPluokP1kI2ZOn18prOZPF7O6rZkf9KNWmvVZSjCilH-Bu8kXmAmNjKLuRDSKN3zlgrzj57L2b0u9wEcyCS2cdxp_x8RkbMqMXIzbuDgQHvIMNTHlNZ9MyKTRYikdGsop5Z3Mv4GSZr13ayaeYrdzLgSeOTA3qX7GfDR3hJWQIhGfag0coorMYig67YeUbP7LtMMFPA2K-uPYelbqEa6GCOafW-r9fell6Nxtvpl1aIdqpksM6NRHk1uITqIWyQgXSKSHch7mNjH9midDwbcBkO4LKP_KJGXbFa49sNmeblBZKIMuC2Prf4n_u9nssnXEu-UoVVy-VJBbDjaxV-gG4J8Cp_mfiwNvHvWuBZGxWNwQwkTYOWF4F1DjWuqQz36oT7h6CqmWWydmscmHmDKFqx9bR-Hc2Bcul6xEkGE4nLdA793e24AfPwK3QgIu4MQ3pfSlVSPrxTRE3W741zahbrxbHUQFMO1e2zhOkVjZoGKPftlsoFg2GSz7CXvJe1cJZ9V45C6QWrW2d9BSeqa2fVHqCjLBM7vBJuvah1T6VyqdKWIQFl6jN3JXBICWE7tQNY6Yyr6O6SkzONCMkCmyVrBhz7n5dwjd1i5pZHFlbL7Xix_t__1fu3mvG6XWmoFK91glpYKgTxmVnCBSAHDxhZKypfQHDgHDtzP6n2WBd2YfS2Y4PTNffjicBfL4aDJQpHvsOtm5ooi5U6prAwn-bkuqX2HDuQItK9AFvwPt3KLE9ma9QA0ZwRXniZv_i9t1_6wH2p7SXO6ivGq7Yd9jTnn4GjwDSHtQpQCpKSrSFRQ&gsessionid=P9_CTK_suGAN_f4Y38vMmGt-7-e6QMcFhMhdw9xkz4aUMJUBWprm7w"},{"id":"sig_070","title":"【實惠爆款】廚房抽屜分隔餐具收納盒家用櫥櫃內置分格刀叉 ...","region":"GLOBAL","platform":"家居情报","category":"家居百货","price":"—","heat_score":76,"surge_rate":127,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】【實惠爆款】廚房抽屜分隔餐具收納盒家用櫥櫃內置分格刀叉筷子置物架廚具收納. $1,791 - $8,656. 1%. (賺17 - 86點). APP下單最高賺… 来源：https://www.rakuten.com.tw/shop/huachengod126/product/cknaa4mz6/?srsltid=AYCX9vJ2M7ohWX1yWtwzWR2qar8MyCaVFZvFg3BB05Wtu2s0XM_A5fiX"},{"id":"sig_004","title":"TikTok跨境电商日报：手链撬动百万GMV，佣金下调","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":76,"surge_rate":119,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】TikTok跨境电商日报2026-10-01 1. TikTok美区一爆款锅周售180万2. Echotik新增MCP/CLI服务功能3. TikTok美国即将… 来源：https://www.google.com/goto?url=CAESeQHEIkXXliq8nw9h0mfj_SxJQ33iuZXgnhhJVZau5K2LCCiGkZjuTORenK7Mmhgy62jC63oF890Z69IEm-uNcwCyh4tWf2tuml7gPhdx-WNcD8MXLjd7gjtWDIcnnku1KRhHGw8Ayjo5tS-7xykruZpxNo_TJ6_G-zg&gsessionid=Lghc3ph_LPhGUHnsd3iWu_oeZ_nxzDCg4xvLSJhQIbgH84VhNR-0UA"},{"id":"sig_029","title":"marketing.md - ai-boost/awesome-…","region":"CN","platform":"小红书","category":"综合热点","price":"—","heat_score":76,"surge_rate":119,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】熟读小红书流量、爆款的全部书籍，掌握流量密码。 摒弃文人矫情，一切基于数据反馈与算法逻辑。 「核心逻辑」 拒绝原创焦虑，所有爆款皆为成功要素的重组。 内容生产即… 来源：https://www.google.com/goto?url=CAESigEBxCJF14UkSG3YKP7LU5RbA4cPPCZ6xElTYYdtAMo_MC06irPTrfgXzlU7AzBOniyT4lAuj2TQwqy3myii1nedVIZ2vbDjAqn_T7kHH231d_QZdeCWn1CXw95s9M5RucrE52TMW53FxQBU0ncjicjVccm0gorfDtGPQWzfBrsBFhN4Vo0l5aQE4FA&gsessionid=JUFURmZQys-uBxGubRLum5Y5HEKSQyazQpjLcVlQq0lrCourRxsTWQ"},{"id":"sig_003","title":"搜索词榜单：了解行业潜力爆品趋势","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":76,"surge_rate":111,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】根据热搜榜单中的【相关商品数】，找到搜索热度高但相关商品少的商品，抓住商品缺口，打造爆品。 据关键词相关商品的【平均价格】，判断该关键词下的商品价格带范围，优化… 来源：https://m.amz123.com/guide/tiktokshop/KWGhhv67"},{"id":"sig_008","title":"美国华人商家的小红书+Instagram双平台最后冲刺清单","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":76,"surge_rate":111,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】库存与发货：主推款留足黑五当周的量，预售款写清发货时间。TikTok Shop今年把预售功能向所有符合条件的商家开放了，发货周期可设3到30天，库存不够的爆款可… 来源：https://www.google.com/goto?url=CAESZQHEIkXXus-szk6Xhitq7HeMmVmmN5fI3uWbuQiE9w0Oqk8XIfNNak7wpRK6Q4kXtNLTuM6qcMTbPdC8mVPwi0NtDx9G5MgzRoaq1xWUIuRWpDz0O6-GgRxMBAWnrN0Otj-JTYCL&gsessionid=Lghc3ph_LPhGUHnsd3iWu_oeZ_nxzDCg4xvLSJhQIbgH84VhNR-0UA"},{"id":"sig_033","title":"抖音几种投流工具","region":"CN","platform":"抖音","category":"综合热点","price":"—","heat_score":76,"surge_rate":111,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["抖音情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】一键起量不是备胎，是唯一的主武器#千川#. 21. 02:18. APP 打开 · 一键起量不是备 ... 微信小店的投流工具有三个作为新手商家到底该怎么选择.… 来源：https://www.google.com/goto?url=CAESbgHEIkXXc0oYrotKF6ND5JApdN9lsAX82wnok-tA9AaeH08I5OBTACqoSPaEUXiOEpafko14FGgJfO-fKFlWVpyjh2FK2fGAF7f7g9fNTrPwzl9NuAnFmskWdSQGeqVW3V_VGaLk9J2UsqVVwEB4&gsessionid=ETs6f06pFjpxWDPg-q545TWzm5M6yBwizo-yYIonfuHxa4D6_zR_-Q"},{"id":"sig_058","title":"双11服饰数据战报：13.8%份额稳大盘天猫拼格局京东扶新锐 .…","region":"GLOBAL","platform":"服饰情报","category":"母婴玩具","price":"—","heat_score":76,"surge_rate":111,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】抖音服饰战报呈现的是一幅分化极其剧烈的图景。超2万中小商家成交破百万，女士秋冬夹克成交额同比增长738%，童装套装增长609%，手拿包增长 ...… 来源：https://www.google.com/goto?url=CAEScQHEIkXXeITgJupq3_u6toL7RAJknSq4DqOiunnA7P6SsdcLBT5OkAhSHZxSR3U9372bikLHVu_0JmVPKusMjmokL74i0n4SxcUDdHNYkU7qMVIF-wGdy3NrMHeh55qcJWHrtg82Ocg3pwsdLJtwl5n2&gsessionid=rXIvfi-z4gcWASxOXkktA4ZV95DXpwHQZqxtqUe7Mbv8v3D6g1GY1g"},{"id":"sig_007","title":"TikTok Shop大促运营全攻略：从报名到爆单的完整操作框架","region":"GLOBAL","platform":"TikTok","category":"服饰鞋包","price":"—","heat_score":76,"surge_rate":103,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】以美区黑五网一大促为例，活动于北京时间11月12日至12月1日举行。美区跨境POP商家 ... 此外，TikTok Shop美区内测AI直播功能，包括AI回复模… 来源：https://www.google.com/goto?url=CAEShQEBxCJF12q-j22vyHqre_NVFDIebzdaCv3_wGnuhy8F8xat6pQMK_bKoAbN7bW7waImy8QYVEdaHuXwesVL2aIm_EvtddrAEfhvzd_-oiBzKtUfiIw2uD86Mwg6vWvMRet2moxcYjw9O5pwn7BWVNLALt1d495N5ad-YHbpCirOqpT-LS8C&gsessionid=Lghc3ph_LPhGUHnsd3iWu_oeZ_nxzDCg4xvLSJhQIbgH84VhNR-0UA"},{"id":"sig_032","title":"蝉妈妈运营圈文章合集_抖音运营干货_电商运营攻略","region":"CN","platform":"抖音","category":"综合热点","price":"—","heat_score":76,"surge_rate":103,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["抖音情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】抖音选品需数据驱动，非凭直觉。通过榜单与SPU库锁定潜力爆品，结合搜索趋势验证需求，评估佣金利润及达人匹配度。利用第三方工具 ...… 来源：https://www.google.com/goto?url=CAEScQHEIkXXZ9hI3uNSS7aI5k47kbTYxd8wNUy90AzddP-zf1lr7ZUDvyGqof_z6MF3yq5WiHVfDUJvsj1isIgOKfz5HfLFEKDSe4aegyPI7lYPrhoM_8STWVelH0GjQZIEXTgm1nye8Vf_MORjEiFGNj3b&gsessionid=ETs6f06pFjpxWDPg-q545TWzm5M6yBwizo-yYIonfuHxa4D6_zR_-Q"},{"id":"amz_B09V7Z4TJG","title":"medicube Toner Pads Zero Pore Pad 2.0 for Exfoliation and Po…","region":"GLOBAL","platform":"Amazon","category":"美妆个护","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","美妆个护","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：美妆个护；ASIN：B09V7Z4TJG；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Medicube-Zero-Pore-Pads-Dual-Textured/dp/B09V7Z4TJG"},{"id":"amz_B0CP9Z56SW","title":"STANLEY Quencher H2.0 Flow State Tumbler, 40 oz, Rose Quartz…","region":"GLOBAL","platform":"Amazon","category":"家居百货","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","家居百货","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：家居百货；ASIN：B0CP9Z56SW；热度为榜单位次估算，非销量。链接：https://www.amazon.com/STANLEY-3-Position-Compatible-Insulated-Stainless/dp/B0CP"},{"id":"amz_B00MW8G62E","title":"Amazon Basics Leak-Proof Dog and Puppy Potty Training Pee Pa…","region":"GLOBAL","platform":"Amazon","category":"宠物用品","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","宠物用品","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：宠物用品；ASIN：B00MW8G62E；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Amazon-Basics-Leak-Proof-Quick-Dry-Absorbency/dp/B00MW8G6"},{"id":"amz_B010OVZO64","title":"Pampers Swaddlers Diapers, Size 5 (20-37 lbs), 132 Count, Fr…","region":"GLOBAL","platform":"Amazon","category":"母婴玩具","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","母婴玩具","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：母婴玩具；ASIN：B010OVZO64；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Pampers-Swaddlers-Disposable-Diapers-SUPPLY/dp/B010OVZO64"},{"id":"amz_B07H45NFBF","title":"Wet Brush Mini Detangler Hair Brush, Pink, Detangling Travel…","region":"GLOBAL","platform":"Amazon·SEA","category":"美妆个护","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","美妆个护","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：美妆个护；ASIN：B07H45NFBF；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Wet-Brush-Detangling-Ultra-Soft-IntelliFlex/dp/B07H45NFBF"},{"id":"amz_B00494MU9M","title":"Breville BEC250 Espresso Machine Cleaning Tablets, 8 Pack | …","region":"GLOBAL","platform":"Amazon·SEA","category":"家居百货","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","家居百货","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：家居百货；ASIN：B00494MU9M；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Breville-Espresso-Cleaning-thoroughly-designed/dp/B00494M"},{"id":"amz_B079T3KSYL","title":"Wahl USA 4-in-1 Calming Pet Shampoo for Dogs – Cleans, Condi…","region":"GLOBAL","platform":"Amazon·SEA","category":"宠物用品","price":"—","heat_score":96,"surge_rate":95,"level":"S","trend_history":[66,71,76,81,86,91,96],"migration_path":["Amazon Best Sellers","宠物用品","榜单第1名"],"ai_advice":"【Amazon Best Sellers 第1名·真商品】类目：宠物用品；ASIN：B079T3KSYL；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Wahl-USA-Calming-Shampoo-Dogs/dp/B079T3KSYL"},{"id":"sig_051","title":"11.25 连续4天韩国现场直播，每天2场，尤其是25号直接开3…","region":"GLOBAL","platform":"美妆情报","category":"美妆个护","price":"—","heat_score":76,"surge_rate":95,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】限量爆款新品： 全马仅限2000瓶！早鸟价2瓶只要RM 168！ . 皇牌【日夜狂欢 ... 从小金瓶、修护精华、面霜、眼霜，到毛孔系列、Gel Mask 都有… 来源：https://www.google.com/goto?url=CAESaAHEIkXXqBLI23pyqFvLhtIzX3hmlmkTa91pv-31qEb7gjZA5elVrItcDVwsqBEr0MqXhFMgdMrk4kYehynduhDoWWMAdqIYFJkShWrqDbNr-2oGhcs9AibOwJcei98XbUkgmhT9QG5D&gsessionid=P9_CTK_suGAN_f4Y38vMmGt-7-e6QMcFhMhdw9xkz4aUMJUBWprm7w"},{"id":"sig_061","title":"“双十一”，狗衣服热销17万件！祖玛珑、阿迪等95个品牌跨界“ …","region":"GLOBAL","platform":"母婴宠物情报","category":"宠物用品","price":"—","heat_score":76,"surge_rate":95,"level":"B","trend_history":[36,39,42,45,48,51,54],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】天猫11月11日披露的2026年“双十一”销售数据显示，截至披露时，鲜朗烘焙猫粮在本届“双十一”期间卖出432万斤，蓝氏冻干猫粮卖出240万斤，两款产品销量合计… 来源：https://www.sohu.com/a/1102091117_121925623"},{"id":"sig_010","title":"疯投圈","region":"GLOBAL","platform":"Temu","category":"综合热点","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】近期最热门的奶茶品牌和细分品类无疑是霸王茶姬和原叶鲜奶茶。这个并不算新的品类为何在2023年杀出重围赢得大众青睐？霸王茶姬靠什么核心能力迅速扩张到三千 ...… 来源：https://crazy.capital/"},{"id":"sig_015","title":"WISE2026商业之王第二批嘉宾阵容官宣-36氪","region":"GLOBAL","platform":"Temu","category":"综合热点","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】又是一年11月，36氪WISE2026商业之王大会，今年在北京亦庄和你见面。 WISE商业之王大会像一扇持续打开的窗口，每一年都向我们展示中国商业世界不断发生的… 来源：https://www.google.com/goto?url=CAESZAHEIkXXL2zlQY6E98X2TdksxH_TiGUm50pBcjnrDJlPBpFHbkBymU0LYn7sipPV6Tmf3XRjXXY2UHjuMQuESoqJ-fK8Vi8IGMb2RjrWE51ItebY2rtUeS61LWdQKRtu7lUt_AY&gsessionid=rroGPv0nvldVhM81t1oVrLCm7q6VUnIkG3TTOlSJZ2-tW8UvUa8iRw"},{"id":"sig_020","title":"乳胶宠物玩具公司有哪些？国内厂家名单及产品定位盘点","region":"CN","platform":"1688","category":"母婴玩具","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】**安徽地区** 天长市亚宁玩具有限公司成立于2008年，主营玩具、乳胶制品、宠物用品，产品涵盖乳胶发泡、橡胶发泡、塑料等系列，原料符合欧盟与美国出口标准，远销… 来源：https://www.google.com/goto?url=CAEShQEBxCJF12F44FfuFk1y0RrHavniFF8cQtVpRedx3KYPMLQuBVS8ITT6E0DlqSKPaD3bCxMMgq8G7SV0uMDNsP_DdRZewdrNmh53tW5G9YTY8EI3xDY4o6_XOskDHHvMSaAmtvSKLz31N3tth4vvm99XYG-RPzHYksFCpbkf0FgfXKj34THi&gsessionid=_3tuExM5htzqeEl56sFhWxrGLOOrHW-v0TB4hrIcIkgrf0ronWJl4w"},{"id":"sig_040","title":"華強北商場7大｜10層高「深圳版黃金」+食玩買商場手機配件 ..…","region":"GLOBAL","platform":"数码情报","category":"3C数码","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】龍勝配件城就如其名，主售多種數碼配件，包括藍牙耳機、智能手錶、充電線、手機殼、保護貼，通通有齊。最大賣點是「批發價做零售」，¥10已可入手手機殼，¥30的無線充… 来源：https://www.google.com/goto?url=CAESxwIBxCJF18tr9X8xK0j3BibSSzGiXGX1VWJuf4jU47umWp30bMMKPGbq4BtXkDisEt43HOx4V8gEL2kEoavZuFs5Y5i94xol93Unexd_mjus-03IQb4iZKoL7ptxrf6_GBb1M9-PXSN8zRbPl43fubn7B1CCyZYDjPYf-_CFvy2wHJwJhjK8mezH93WcU6X4aHPtgj1RahsbGuiBfRluzS5qmxkXvRHKJfaZ0HE-2zB5ayx6MA1KJ8HNts03yrBgwou3LpO-c7FopxAj2pt5bDocUGdxiOQb9XjKOc9IZQb3TT1cVpS96rp8EbF2CbQmx8raWEzavHDhaFmB3rt4higbq0VbZe3gDKhTVpipzlw4pMQ3cLW2EF8qDTRgYUT_xmR3DnGXK0ZFQEA_Bzponk_egc1-2u-O3Vpp6yLr2hqO_mfygTZjSvY&gsessionid=JnO5YT3F2IlQmV-oceQmJm2hrx3znHPWkwiye4KIqykzM-aWz1QLVA"},{"id":"sig_045","title":"MudiMood","region":"GLOBAL","platform":"美妆情报","category":"美妆个护","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】近期爱用品，黑五低至5折！ · 年度爱用提前看！ · 【黑五半价】新品爱不释手，冷敷＋提拉＋焕亮，AMIRO新品有点厉害！ · 【无广黑五攻略】年度爱用美容仪！… 来源：https://www.youtube.com/channel/UCv_rViM5ECdrsNC4MAYw8hw/videos"},{"id":"sig_055","title":"研究报告","region":"GLOBAL","platform":"服饰情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】BCG 最新研究：运动服饰品牌如何乘上全球康养经济的顺风. 订阅用户. BCG 最新 ... 美国运动鞋市场最新调研报告称：产品创新普遍缺位，品牌表现高度依赖经… 来源：https://luxe.co/category/reports"},{"id":"sig_075","title":"這份美好也來到桃園正康店！在福維 ...","region":"GLOBAL","platform":"家居情报","category":"家居百货","price":"—","heat_score":72,"surge_rate":92,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】家裡常用的深碗，和宴客時拿出的高腳杯，需要不同的擺放空間。 Miele 靈活的碗籃設計，能配合餐具形狀調整， 讓收拾時少些挪來挪去的麻煩。 3D MultiFl… 来源：https://www.google.com/goto?url=CAESaAHEIkXXCEgisRqfTAza9ozr0qRATiIZQPsN65ojv0vuLUhPTcd49L4bsKpHmC3f5uW4Zgf2vWK-EmFcJjRqLn4SqMxWUjmBXGrobIEJeCD_xydBQ0d8SCFxKFEKi3F5PH00QkPtA1xd&gsessionid=j57z38MdYNVBJfyBxnhunOxWXhg45qCHTk9mnH717Zht3TU1WcqvFQ"},{"id":"amz_B0FQFB8FMG","title":"Apple AirPods Pro 3 Wireless Earbuds with Active Noise Cance…","region":"GLOBAL","platform":"Amazon","category":"3C数码","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","3C数码","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：3C数码；ASIN：B0FQFB8FMG；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Apple-Cancellation-Translation-Headphones-High-Fidelity/d"},{"id":"amz_B0B2RM68G2","title":"BIODANCE Bio-Collagen Real Deep Mask for Hydrating & Plumpin…","region":"GLOBAL","platform":"Amazon","category":"美妆个护","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","美妆个护","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：美妆个护；ASIN：B0B2RM68G2；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Biodance-Bio-Collagen-Tightening-Hydrating-Molecular/dp/B"},{"id":"amz_B085DV8T75","title":"Owala FreeSip Stainless Steel Water Bottle 24 oz Shy Marshma…","region":"GLOBAL","platform":"Amazon","category":"家居百货","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","家居百货","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：家居百货；ASIN：B085DV8T75；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Owala-Insulated-Stainless-Steel-Push-Button-Marshmallow/d"},{"id":"amz_B0009X29WK","title":"Dr. Elsey&#x27;s Ultra UnScented Clumping Clay Cat Litter 40…","region":"GLOBAL","platform":"Amazon","category":"宠物用品","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","宠物用品","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：宠物用品；ASIN：B0009X29WK；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Dr-Elseys-Premium-Clumping-Litter/dp/B0009X29WK"},{"id":"amz_B07SCL613T","title":"Huggies Natural Care Sensitive Baby Wipes, Unscented, Hypoal…","region":"GLOBAL","platform":"Amazon","category":"母婴玩具","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","母婴玩具","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：母婴玩具；ASIN：B07SCL613T；热度为榜单位次估算，非销量。链接：https://www.amazon.com/HUGGIES-Natural-Unscented-Sensitive-Water-Based/dp/B07SCL"},{"id":"amz_B075X2KL5C","title":"Aveeno Skin Relief Fragrance-Free Body Wash with Triple Oat …","region":"GLOBAL","platform":"Amazon·SEA","category":"美妆个护","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","美妆个护","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：美妆个护；ASIN：B075X2KL5C；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Aveeno-Fragrance-Free-Formulated-Sensitive-Fragrance/dp/B"},{"id":"amz_B007RGJLAA","title":"Cuisinart GreenGourmet Bamboo Solid Turner, 15\" x 3\" x 0.9\"","region":"GLOBAL","platform":"Amazon·SEA","category":"家居百货","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","家居百货","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：家居百货；ASIN：B007RGJLAA；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Cuisinart-GreenGourmet-Bamboo-Solid-Turner/dp/B007RGJLAA"},{"id":"amz_B079T44C3J","title":"Wahl Dry Skin & Itch Relief Pet Shampoo for Dogs – Oatmeal F…","region":"GLOBAL","platform":"Amazon·SEA","category":"宠物用品","price":"—","heat_score":93,"surge_rate":89,"level":"S","trend_history":[63,68,73,78,83,88,93],"migration_path":["Amazon Best Sellers","宠物用品","榜单第2名"],"ai_advice":"【Amazon Best Sellers 第2名·真商品】类目：宠物用品；ASIN：B079T44C3J；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Wahl-Skin-Itch-Relief-Shampoo/dp/B079T44C3J"},{"id":"sig_009","title":"妙手ERP是什么？2026年功能、收费与适用场景全解析","region":"GLOBAL","platform":"Temu","category":"综合热点","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】妙手ERP是深圳呈云网络科技有限公司旗下的免费跨境电商ERP软件，创立于2019年，截至目前已服务超110万跨境卖家。它支持TikTok Shop、Temu、O… 来源：https://www.google.com/goto?url=CAEShQEBxCJF19QCsXD9wfEvbkP1Pzg0mPrf9FrkIq-od8XHk9aySDc-brGUH6D_MlmlTWa_WtghrvbVLwB7jmrUcf0rgLYqYWXxuWP-ObQbvS2R4yqdz0O_IViM4Z3X5LaJf9wBgcO49lbrTK59U93y_nEtqyayxzD-XeDiryuFGxQJKIl9jAmJ&gsessionid=rroGPv0nvldVhM81t1oVrLCm7q6VUnIkG3TTOlSJZ2-tW8UvUa8iRw"},{"id":"sig_014","title":"商家请加+18344071059 接：亚马逊，沃尔玛，temu","region":"GLOBAL","platform":"Temu","category":"综合热点","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】商家请加+18344071059 接：亚马逊，沃尔玛，temu，TikTok，Wayfair，otto，SHEIN，chewy，等各平台美国站- 加拿大-英国-… 来源：https://www.google.com/goto?url=CAEShQEBxCJF16H7H39wxkTbAf23m8idigAvSXwgdE4ttCXz_Z0bOTgUo3ImqDPnkFRR5p5rGVRa3TeBvAFK5-3LUudkIFqSHaNxfakY7gIi7_RL5Y12tu4SabN2olg3YduIUkGw7yxcBy2BlO3QG33z83yTIAK87l3_nuLFTNpBEmJZctxYMG0O&gsessionid=rroGPv0nvldVhM81t1oVrLCm7q6VUnIkG3TTOlSJZ2-tW8UvUa8iRw"},{"id":"sig_019","title":"AI卖穿戴甲月入十万攻略","region":"CN","platform":"1688","category":"综合热点","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】进货渠道主要有两个：一是《淘宝》上找源头工厂店，很多支持一件代发，适合新手零库存起步；二是《拼多多》上的批发专区，价格更低但起批量大。建议先各拿50-100副测… 来源：https://www.google.com/goto?url=CAESWgHEIkXXhHw8LuvNQ6_p8d-EmpVIdTLW9IHjyUVuLk6rZDagq88aAUu3wbCuubMt_rRusM2cm46xT3EJmlga-Ddk4PLr56ktn_oSIJfWRWjzhkMlSITfS29wuA&gsessionid=_3tuExM5htzqeEl56sFhWxrGLOOrHW-v0TB4hrIcIkgrf0ronWJl4w"},{"id":"sig_024","title":"小红书推广怎么做？2026最新实操攻略：从0到1系统指南","region":"CN","platform":"小红书","category":"综合热点","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】在小红书做推广，核心逻辑是“种草”——让内容自然融入社区，由平台算法根据互动率和关键词匹配度决定是否推荐给更多人。2026年平台流量机制发生明显变化，搜索流量占… 来源：https://kuku.baidu.com/landing/tscp_doc/e3f2fe0ffe2731f852e8b0f48b8cba41"},{"id":"sig_034","title":"ClipForge - 开源AI 带货短视频神器——上传一张商品…","region":"CN","platform":"抖音","category":"综合热点","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["抖音情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】：开源AI 带货短视频神器——上传一张商品图，AI 自动提炼卖点+ 写种草脚本+ 锁定商品原图不变形+ 配画面/配音/字幕，一键产出抖音小店/ 快手/ 小红书/… 来源：https://www.google.com/goto?url=CAESYQHEIkXXemgKzUAjyjL_U4MWyaALvxTiJ3HpHAvYxqhaTXvAqMmqid1Du2foVvCCLYI7AqhRD8njpijhtfKv1H3WryBuGxToAt39SMrhJWJOajiADSYKZxKaIoWsMKq-n6Q&gsessionid=ETs6f06pFjpxWDPg-q545TWzm5M6yBwizo-yYIonfuHxa4D6_zR_-Q"},{"id":"sig_039","title":"OPPO小书包大量流入二手鱼！低至8元，量大管饱系列","region":"GLOBAL","platform":"数码情报","category":"3C数码","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】就像前面聊到的，耳机、数据线、小型充电器、内存卡这类数码小配件，全都能往里面塞。这款迷你小书包本来就是OPPO商城上架的官方配件，官方标价19元，也可以参加平台… 来源：https://post.smzdm.com/p/ae652qdk/"},{"id":"sig_044","title":"淘宝活动图片ps素材","region":"GLOBAL","platform":"数码情报","category":"3C数码","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】头戴耳机数码小电器电商海报。展示头戴式耳机产品，具有金属质感和深灰色设计。画面呈现科技感光影效果，突出耳罩细节和完整头梁结构，适合电商零售平台使用。… 来源：https://www.google.com/goto?url=CAESfgHEIkXXYJmM9ttObbIjTjBUubyqWYs8WtQQ3L1d9RtnO8pRMQzswGJVMayQ3bYNOVAJvkOmMgfIxk-SYzYXQDqe4zWVnxeWkGoHSzVPdjOLLLpJ4ov3ft2GvCA7_IeoVd9iUi4x9gpareNIGlHcDYiMSxCfnHzhEbtni8BuXQ&gsessionid=JnO5YT3F2IlQmV-oceQmJm2hrx3znHPWkwiye4KIqykzM-aWz1QLVA"},{"id":"sig_049","title":"双11美妆凑单满300减40攻略","region":"GLOBAL","platform":"美妆情报","category":"美妆个护","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】刚需囤货清单：洁面、水乳、保湿面霜、防晒、补水面膜、次抛精华，适合凑单；彩妆优先囤粉底液、定妆粉、口红。 避坑要点：第一，凑单只选低价小件，绝不买闲置护肤品 .… 来源：https://www.google.com/goto?url=CAESXwHEIkXXA7jlMtt7AO4kmcyLrjkD-5DvZ7Xr-EGkLnG4S6Vo_Weku7X6bdJMau67fTzEHARgeXeFWvGAENq-doMEVLbvk4xMxXtnTK2CAt6asrYiLtUqw6x2IdRe4LLX&gsessionid=P9_CTK_suGAN_f4Y38vMmGt-7-e6QMcFhMhdw9xkz4aUMJUBWprm7w"},{"id":"sig_054","title":"亚洲码和欧码哪个偏大？服装鞋码这样判断","region":"GLOBAL","platform":"服饰情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】亚洲鞋码与欧洲鞋码对照表 ; 24.0cm / 240, EU 38, 运动鞋和皮鞋的松量不同 ; 24.5cm / 245, EU 39, 脚背高时要看鞋面高… 来源：https://walkera.com/?ArTicle/details/2026111689511.shtml"},{"id":"sig_059","title":"嗨！快來看看『【Lapass】美津羽毛球鞋｜輕量透氣｜防滑抓 .…","region":"GLOBAL","platform":"服饰情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】嗨！快來看看『【Lapass】美津羽毛球鞋｜輕量透氣｜防滑抓地｜耐磨緩震｜專業球場運動鞋｜訓練比賽適用』，售價只要$1080！… 来源：https://www.google.com/goto?url=CAEShQEBxCJF1-3KbrzXo0SB5_QET4qwne681_XO2ZVWJWnUOju8K76t4w5GhSnr16zRdtC2JMNltH-si4I4QcQxWUwHBSCO-HZghgO2mvWPCHdXT9vAJqpYrbI79PNaPA06RLfAtQVYaNtyVVHWKgYtshHb7qVhlWU_B5StCVLX9g0SadW7WdOd&gsessionid=rXIvfi-z4gcWASxOXkktA4ZV95DXpwHQZqxtqUe7Mbv8v3D6g1GY1g"},{"id":"sig_064","title":"画面包含蓝色和黄色两款宠物饮水杯，配有按键出水、挂绳 ...","region":"GLOBAL","platform":"母婴宠物情报","category":"宠物用品","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】宠物出行便携饮水杯电商促销海报。图片展示了一只小狗正在户外使用随行水杯喝水的场景，画面包含蓝色和黄色两款宠物饮水杯，配有按键出水、挂绳便携等功能图标， ...… 来源：https://www.google.com/goto?url=CAESZQHEIkXXfxb1rvV9zgxn67J4B_Lfirdta6txT2O5Xth4Pz6velYm3sLvwqH1HDZ5dboNt4cKJGqO3kKwgy3zYC7Ho5kqOIBA7lF7I4irvrIyqSSvgZZUyCUgZolqMEntX9StGiIU&gsessionid=Im-YYxu-Ee1Eo6Kh6u2T31g1BbaQ5nB9I3RqbYcLdDJ7jiF4r86yFg"},{"id":"sig_069","title":"家居日用官网地址/招商经理联系方式/卖家评价","region":"GLOBAL","platform":"家居情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】收纳整理：收纳箱、置物架、免钉挂钩、衣柜与抽屉分隔、真空压缩袋、折叠类用品. 家纺布艺：床品套件、毛巾、窗帘、地毯、靠垫、桌布、沙发盖布. 卫浴用品：浴室 ..… 来源：https://m.chwang.com/dailyuse/description"},{"id":"sig_074","title":"線上購買nitori-宜得利家居- 2026年11月特惠及推薦商…","region":"GLOBAL","platform":"家居情报","category":"家居百货","price":"—","heat_score":72,"surge_rate":84,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】廚房清洗用具 · 廚房百貨 · 居家清潔劑 · 天然清潔劑 · 清潔劑 · 廚房清潔 · 浴室清潔 ... NITORI 廚房餐具收納籃附把手筷子刀叉置物籃, … 来源：https://www.google.com/goto?url=CAESkAEBxCJF19KapjTyoRP5fP5FK_iPX0KVi1qUAxjUUNkz0rkaTjB2cpd0KtXzSMxZqqSALmjE7M8XZYvzCRp8Zf54Y2a80R2jHheZe9eht95p0JvP5V7I9wcaLew1BBwb3EDBIAaBX51q2Aus8PDCzqqoSFG2KsaF4jRyhBN3nBStuThHeWZpOMUdKecF1p5ccCo&gsessionid=j57z38MdYNVBJfyBxnhunOxWXhg45qCHTk9mnH717Zht3TU1WcqvFQ"},{"id":"amz_B0DCH8VDXF","title":"Apple EarPods Headphones with USB-C Plug, Wired Ear Buds wit…","region":"GLOBAL","platform":"Amazon","category":"3C数码","price":"—","heat_score":90,"surge_rate":83,"level":"A","trend_history":[60,65,70,75,80,85,90],"migration_path":["Amazon Best Sellers","3C数码","榜单第3名"],"ai_advice":"【Amazon Best Sellers 第3名·真商品】类目：3C数码；ASIN：B0DCH8VDXF；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Apple-EarPods-Headphones-Built-Control/dp/B0DCH8VDXF"},{"id":"amz_B0DGTMR754","title":"medicube Collagen Jelly Cream, Moisturizing Cream for Plump …","region":"GLOBAL","platform":"Amazon","category":"美妆个护","price":"—","heat_score":90,"surge_rate":83,"level":"A","trend_history":[60,65,70,75,80,85,90],"migration_path":["Amazon Best Sellers","美妆个护","榜单第3名"],"ai_advice":"【Amazon Best Sellers 第3名·真商品】类目：美妆个护；ASIN：B0DGTMR754；热度为榜单位次估算，非销量。链接：https://www.amazon.com/medicube-overnight-elasticity-hydrating-moisturizing/dp/B"},{"id":"amz_B0CYJBB2JQ","title":"bella Fits-Anywhere™ 2-Slice Slim Toaster, Long Slot & Extra…","region":"GLOBAL","platform":"Amazon","category":"家居百货","price":"—","heat_score":90,"surge_rate":83,"level":"A","trend_history":[60,65,70,75,80,85,90],"migration_path":["Amazon Best Sellers","家居百货","榜单第3名"],"ai_advice":"【Amazon Best Sellers 第3名·真商品】类目：家居百货；ASIN：B0CYJBB2JQ；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Toaster-Fits-anywhereTM-Kitchenware-Setting-Removable/dp/"},{"id":"amz_B005OB3E30","title":"Earth Rated Dog Poop Bags on Refill Rolls, 270 Bags, Lavende…","region":"GLOBAL","platform":"Amazon","category":"宠物用品","price":"—","heat_score":90,"surge_rate":83,"level":"A","trend_history":[60,65,70,75,80,85,90],"migration_path":["Amazon Best Sellers","宠物用品","榜单第3名"],"ai_advice":"【Amazon Best Sellers 第3名·真商品】类目：宠物用品；ASIN：B005OB3E30；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Purina-Fancy-Feast-Poultry-Collection/dp/B005OB3E30"},{"id":"amz_B01MSSDEPK","title":"CeraVe Hydrating Cleanser, 472 ml | Daily Face Wash & Makeup…","region":"GLOBAL","platform":"Amazon·SEA","category":"美妆个护","price":"—","heat_score":90,"surge_rate":83,"level":"A","trend_history":[60,65,70,75,80,85,90],"migration_path":["Amazon Best Sellers","美妆个护","榜单第3名"],"ai_advice":"【Amazon Best Sellers 第3名·真商品】类目：美妆个护；ASIN：B01MSSDEPK；热度为榜单位次估算，非销量。链接：https://www.amazon.com/CeraVe-Hydrating-Cleanser-Association-Certified/dp/B01MSS"},{"id":"amz_B07BMS2G2Y","title":"Rayen 6011.01 Covers Airer for Rain, Polyethylene, 2.6 x 2 x…","region":"GLOBAL","platform":"Amazon·SEA","category":"家居百货","price":"—","heat_score":90,"surge_rate":83,"level":"A","trend_history":[60,65,70,75,80,85,90],"migration_path":["Amazon Best Sellers","家居百货","榜单第3名"],"ai_advice":"【Amazon Best Sellers 第3名·真商品】类目：家居百货；ASIN：B07BMS2G2Y；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Rayen-6011-01-Covers-Airer-Polyethylene/dp/B07BMS2G2Y"},{"id":"amz_B0GJTFXNRX","title":"Apple AirTag (2nd Generation): Tracker for Keychain, Wallet,…","region":"GLOBAL","platform":"Amazon","category":"3C数码","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","3C数码","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：3C数码；ASIN：B0GJTFXNRX；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Apple-AirTag-2nd-Generation-Precision/dp/B0GJTFXNRX"},{"id":"amz_B08KT2Z93D","title":"Mighty Patch Hero Cosmetics Original Nighttime Acne Pimple P…","region":"GLOBAL","platform":"Amazon","category":"美妆个护","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","美妆个护","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：美妆个护；ASIN：B08KT2Z93D；热度为榜单位次估算，非销量。链接：https://www.amazon.com/eos-Cashmere-Moisture-Lightweight-Non-Greasy/dp/B08KT2Z93"},{"id":"amz_B0H2FQ5FV1","title":"HydroJug Traveler 32oz, Insulated Water Bottle with Handle, …","region":"GLOBAL","platform":"Amazon","category":"家居百货","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","家居百货","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：家居百货；ASIN：B0H2FQ5FV1；热度为榜单位次估算，非销量。链接：https://www.amazon.com/HydroJug-Traveler-Insulated-leak-resistant-dishwasher/dp/"},{"id":"amz_B00BSYR7K8","title":"Amazon Echo Show 5 (newest model), Smart display, Designed f…","region":"GLOBAL","platform":"Amazon","category":"宠物用品","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","宠物用品","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：宠物用品；ASIN：B00BSYR7K8；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Earth-Rated-Lavender-Scented-Completely/dp/B00BSYR7K8"},{"id":"amz_B0BJ13K7FR","title":"Pampers Sensitive Baby Wipes, Unscented, Fragrance Free, Cli…","region":"GLOBAL","platform":"Amazon","category":"母婴玩具","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","母婴玩具","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：母婴玩具；ASIN：B0BJ13K7FR；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Pampers-Wipes-Sensitive-Perfume-Multi/dp/B0BJ13K7FR"},{"id":"amz_B07YT6F4ZK","title":"Bioderma - Sensibio H2O - Micellar water makeup remover, Mak…","region":"GLOBAL","platform":"Amazon·SEA","category":"美妆个护","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","美妆个护","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：美妆个护；ASIN：B07YT6F4ZK；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Bioderma-Sensibio-Micellar-removing-Sensitive/dp/B07YT6F4"},{"id":"amz_B0CLLZ3WG3","title":"SAKAGEN HAND CREATION Flower Shears Type F-180 Scissors (Mos…","region":"GLOBAL","platform":"Amazon·SEA","category":"家居百货","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","家居百货","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：家居百货；ASIN：B0CLLZ3WG3；热度为榜单位次估算，非销量。链接：https://www.amazon.com/SAKAGEN-CREATION-Flower-F-180-Scissors/dp/B0CLLZ3WG3"},{"id":"amz_B09BBN9FMM","title":"Best Pet Supplies Crinkle Dog Toy for Small, Medium, and Lar…","region":"GLOBAL","platform":"Amazon·SEA","category":"宠物用品","price":"—","heat_score":87,"surge_rate":77,"level":"A","trend_history":[57,62,67,72,77,82,87],"migration_path":["Amazon Best Sellers","宠物用品","榜单第4名"],"ai_advice":"【Amazon Best Sellers 第4名·真商品】类目：宠物用品；ASIN：B09BBN9FMM；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Best-Pet-Supplies-Stuffing-Squeaker/dp/B09BBN9FMM"},{"id":"sig_013","title":"黑五首日哑火，卖家集体炸了","region":"GLOBAL","platform":"Temu","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】从品类来看，出现在主站搜索结果中的Haul商品大多是客单价本来就不高的品类，其中家居与厨房、服饰鞋履与珠宝、工业与科学品类的数量最多，分别有6.62万、4.75… 来源：https://www.google.com/goto?url=CAESbQHEIkXX4Sg09OajxeizVmeWI3XzwXJfRO41m941irF-zw8cIbmbjjrHKDLRRje0x5eAqIHY8MkHI5qg8hp3zs21NYCQlDNWUF49i4ytfl85GrCI8GahhCegh_-Z3jVv4zg6L4Lt82sjp9a8gN4&gsessionid=rroGPv0nvldVhM81t1oVrLCm7q6VUnIkG3TTOlSJZ2-tW8UvUa8iRw"},{"id":"sig_018","title":"做电商如何找货源？33个货源网站值得收藏，比1688便宜","region":"CN","platform":"1688","category":"综合热点","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】在这里刀哥要给大家划重点：. 1、优先选择离自己最近的货源基地。 2、注意鉴别各个档口、供应商是否是经销商，我们需要找到生产厂家的一手货源。 3、产品实图是否提… 来源：https://m.cifnews.com/article/93909"},{"id":"sig_023","title":"一个人能做独立站吗","region":"CN","platform":"1688","category":"综合热点","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】物流选择：如果卖家选择的是一件代发，那物流方面就不必考虑了，但如果卖家选择的是自发货，那就建议看看我们的往期文章《独立站新手教程物流篇：物流服务商汇总》，来详细… 来源：https://www.google.com/goto?url=CAESYQHEIkXXEYjASP18phaTHzWXUbYDDciER9IC5c5xmVDMsGBaoMquhjZvKj16gsrLKHaRkBph_GwSGcGBSg8jq92aZszCVdB421oO7VNJzdUBD0wsUT2h-MPmC7yxCRSV1y4&gsessionid=_3tuExM5htzqeEl56sFhWxrGLOOrHW-v0TB4hrIcIkgrf0ronWJl4w"},{"id":"sig_028","title":"小红书怎么赚钱？2026年6种主流变现方式操作步骤与门槛 ...","region":"CN","platform":"小红书","category":"综合热点","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】**2. 好物体验置换** 门槛最低、零成本，账号刚注册、零粉丝也能参与。在小红书APP找到好物体验板块，申请品牌免费试用，通过后按要求拍真实使用感受笔记发布即… 来源：https://www.google.com/goto?url=CAEShQEBxCJF1wtmouhAwkRCRiM0VRiGFWDuxKNMHwBApbHkbDBViKYTe9o7nEyvpUpquCYxs65b_bcfABGC4YPH0ZSNPL_PUFHirwNe8fev73W7q1Re2JNRwpwOlZwQtlvIefbD9A90j7_Po2nRZA64L5pLmehj4_-wg2CXT0AG910_82Gi8_K7&gsessionid=JUFURmZQys-uBxGubRLum5Y5HEKSQyazQpjLcVlQq0lrCourRxsTWQ"},{"id":"sig_038","title":"产品3D渲染模板","region":"GLOBAL","platform":"数码情报","category":"综合热点","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】稿定为您提供10000 个产品3D渲染设计模板，支持一键替换和快速编辑，轻松制作专属设计。无论是图片、视频、PPT、H5页面等宣传物料，这里都能满足您的需求。… 来源：https://www.gaoding.com/templates/chanpin3Dxuanran"},{"id":"sig_043","title":"嗨！快來看看『【3C+Wh標示】 Freeman 全固態行動電源…","region":"GLOBAL","platform":"数码情报","category":"综合热点","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】嗨！快來看看『【3C+Wh標示】 Freeman 全固態行動電源台灣製造一億全球產險可上飛機固態行動電源行動電源磁吸』，售價只要$1300 - $1550！… 来源：https://www.google.com/goto?url=CAEShgEBxCJF1xKkDVbN98TdP60w0HNbhy8j_6a-WW_J0rSaEAnVFARwacS_9nqmKIIqall0O_Af1kBb-ofH2p-NsKTgj5p9V-8m9CEichLQ_E-YWdrtb6XCUiWS1j19sku5ebywRwtM82WNFfApKY2phPvA5RWlxTVUaKeO0o66Gi2KYxd0OVnYWg&gsessionid=JnO5YT3F2IlQmV-oceQmJm2hrx3znHPWkwiye4KIqykzM-aWz1QLVA"},{"id":"sig_048","title":"玻尿酸补水/积雪草修护/维他命C 提亮肤色/茶树控油净痘 ...","region":"GLOBAL","platform":"美妆情报","category":"美妆个护","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】... 精华面膜RM75 选择：玻尿酸补水/积雪草修护/维他命C 提亮肤色/茶树控油净痘/胶原蛋白弹润紧致✓一盒10片一片= 满满一瓶精华感 10片装｜多款精华… 来源：https://www.google.com/goto?url=CAESlgEBxCJF1yD_R_5D5zYTKn78CX-EOvSyItWqm1nmttNcxE9B_3d_uQXYZCl8I4_EAnqrnaCBaTUBDO-gdWqdeLTeUo5oVqzSGH9RXQUvDzgCIDGZ-CmkmvOvErm0IKdJ6z4VjuM404I8qva3SroIDxhUTf9YK9jpSsgIfGTIIgvlJWqbib-ePjnebL3OvFd6nBPp-Gfj6mE&gsessionid=P9_CTK_suGAN_f4Y38vMmGt-7-e6QMcFhMhdw9xkz4aUMJUBWprm7w"},{"id":"sig_053","title":"运动鞋，潮流服饰，球星卡/集换卡，手袋，手表","region":"GLOBAL","platform":"服饰情报","category":"3C数码","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】买卖最热门的运动鞋，包括阿迪达斯(Adidas) Yeezy 和Retro Jordan、Supreme 潮流服饰、球星卡/集换卡、收藏品、设计师手袋和手表等。… 来源：https://stockx.com/zh-cn/charlie-bears-elpa"},{"id":"sig_063","title":"uci    加州留学生当妈后应该吃什么？ - Dealmoon","region":"GLOBAL","platform":"母婴宠物情报","category":"宠物用品","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】对了，我最近正在学习做猫饭，你们一般是在哪个超市给小猫买食物，然后有没有推荐的猫粮？ 1 小时前发布. 相关商品 · Royal Canin 布偶猫成猫粮7磅.… 来源：https://www.dealmoon.com/post/3277558"},{"id":"sig_068","title":"简谟生物技术招聘","region":"GLOBAL","platform":"母婴宠物情报","category":"宠物用品","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】上海简谟生物技术有限公司是一家专注宠物食品的多品牌消费品公司。我们以「Simple Strategy 简单策略」为经营理念，旗下拥有诚实一口、格吾安、东边、酥醒… 来源：https://www.google.com/goto?url=CAESfAHEIkXXBZ8p8cFAb6ef_DQRD-rVFu--tDLiU0yHMNKp4anlYftApaAKZ6Gw6gKPOIhv1W4JgQlw9uTdb1jHoJZMu5lLI1TfPdk4m9Dk1TxfEsDwm6n2Vc7AN7dkHG4qdT93I8_zQn3lCs1jcLYW34Q9jqS3zvUfG371s0w&gsessionid=Im-YYxu-Ee1Eo6Kh6u2T31g1BbaQ5nB9I3RqbYcLdDJ7jiF4r86yFg"},{"id":"sig_073","title":"【好氣氛家居】多功能雙層帶瀝水盤廚房碗盤架/收納架置物架 ...","region":"GLOBAL","platform":"家居情报","category":"家居百货","price":"—","heat_score":72,"surge_rate":76,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】分期方式. 限一次付清 ; 網路價：$ 307 ; 優惠價$ 298 ; 規格. 黑色 ; 買了【好氣氛家居】多功能雙層帶瀝水盤廚房碗盤架/收納架置物架桌上收納… 来源：https://www.google.com/goto?url=CAESYAHEIkXXmAwX2hRk79CKTwjUlKu9dem2tJALh36UUX5rXMZM9di-QdL7bE9U3k84MPPoSJ0ILCbnOUemvrrDrJQGqxQYm8XTASXqA4FAkuJSDaQj97707MRTfk1Gz6QbEQ&gsessionid=j57z38MdYNVBJfyBxnhunOxWXhg45qCHTk9mnH717Zht3TU1WcqvFQ"},{"id":"amz_B0DXXYS4BJ","title":"Roku Streaming Stick HD with Voice Remote | Compact HD Strea…","region":"GLOBAL","platform":"Amazon","category":"3C数码","price":"—","heat_score":84,"surge_rate":71,"level":"A","trend_history":[54,59,64,69,74,79,84],"migration_path":["Amazon Best Sellers","3C数码","榜单第5名"],"ai_advice":"【Amazon Best Sellers 第5名·真商品】类目：3C数码；ASIN：B0DXXYS4BJ；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Roku-Streaming-Stick-HD-2025/dp/B0DXXYS4BJ"},{"id":"amz_B0DGPSZVW3","title":"Anua PDRN Hyaluronic Acid 100 Moisturizing Cream, 2.02 fl oz…","region":"GLOBAL","platform":"Amazon","category":"美妆个护","price":"—","heat_score":84,"surge_rate":71,"level":"A","trend_history":[54,59,64,69,74,79,84],"migration_path":["Amazon Best Sellers","美妆个护","榜单第5名"],"ai_advice":"【Amazon Best Sellers 第5名·真商品】类目：美妆个护；ASIN：B0DGPSZVW3；热度为榜单位次估算，非销量。链接：https://www.amazon.com/medicube-Collagen-Niacinamide-Freeze-Dried-Hydrolyzed/dp/"},{"id":"amz_B00S93EQUK","title":"Alpha Grillers Meat Thermometer Digital, Stocking Stuffers G…","region":"GLOBAL","platform":"Amazon","category":"家居百货","price":"—","heat_score":84,"surge_rate":71,"level":"A","trend_history":[54,59,64,69,74,79,84],"migration_path":["Amazon Best Sellers","家居百货","榜单第5名"],"ai_advice":"【Amazon Best Sellers 第5名·真商品】类目：家居百货；ASIN：B00S93EQUK；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Alpha-Grillers-Thermometer-Ultra-Fast-Pre-Calibrated/dp/B"},{"id":"amz_B09B2SBHQK","title":"Amazon Basics Dog Poop Leak Proof Bags with Dispenser and Le…","region":"GLOBAL","platform":"Amazon","category":"宠物用品","price":"—","heat_score":84,"surge_rate":71,"level":"A","trend_history":[54,59,64,69,74,79,84],"migration_path":["Amazon Best Sellers","宠物用品","榜单第5名"],"ai_advice":"【Amazon Best Sellers 第5名·真商品】类目：宠物用品；ASIN：B09B2SBHQK；热度为榜单位次估算，非销量。链接：https://www.amazon.com/All-new-Echo-Show-5/dp/B09B2SBHQK"},{"id":"amz_B08QRKY3NJ","title":"Huggies Simply Clean Baby Wipes, Unscented, 11 Packs, 704 Wi…","region":"GLOBAL","platform":"Amazon","category":"母婴玩具","price":"—","heat_score":84,"surge_rate":71,"level":"A","trend_history":[54,59,64,69,74,79,84],"migration_path":["Amazon Best Sellers","母婴玩具","榜单第5名"],"ai_advice":"【Amazon Best Sellers 第5名·真商品】类目：母婴玩具；ASIN：B08QRKY3NJ；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Unscented-Huggies-Simply-Fragrance-Free-Diaper/dp/B08QRKY"},{"id":"amz_B0CKRWQ967","title":"MiconaHex+Triz Shampoo for Dogs, Cats and Horses, 8 oz","region":"GLOBAL","platform":"Amazon·SEA","category":"宠物用品","price":"—","heat_score":84,"surge_rate":71,"level":"A","trend_history":[54,59,64,69,74,79,84],"migration_path":["Amazon Best Sellers","宠物用品","榜单第5名"],"ai_advice":"【Amazon Best Sellers 第5名·真商品】类目：宠物用品；ASIN：B0CKRWQ967；热度为榜单位次估算，非销量。链接：https://www.amazon.com/MiconaHex-Triz-Shampoo-Dogs-Horses/dp/B0CKRWQ967"},{"id":"sig_012","title":"TemuY2物流授权及发货流程（美区） - 妙手ERP","region":"GLOBAL","platform":"Temu","category":"综合热点","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】一、功能说明1、TemuY2业务是指TemuY2订单从国内发货，使用物流商发头程（先向物流商获取头程面单，卖家贴物流商头程面单，到美国后由物流商换temu平台面… 来源：https://www.google.com/goto?url=CAESdQHEIkXXDIB-LKxIR_pJldxq-OuoLd3VXzfW7tv5XgTBo8N3P_S4j7QvPy-D05gXBki8ZCmxjHbQ5uBePwPLujFIm6HcqES5bxmEXpZbF7Su1KMX8y3LvqFCQ98oxjlMocMO9NUubkDFONXT-K-BJqjvYcxDIg&gsessionid=rroGPv0nvldVhM81t1oVrLCm7q6VUnIkG3TTOlSJZ2-tW8UvUa8iRw"},{"id":"sig_017","title":"微信小店一件代发怎么做？抖掌柜选品发货流程与规则 - 海南","region":"CN","platform":"1688","category":"综合热点","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】微信小店一件代发怎么做？抖掌柜选品发货流程与规则 ; 找订单, 开微信小店后台翻, 同步到一处 ; 找货源, 记在本子上, 自动匹配 ; 填信息, 一项项复制,… 来源：https://hainan.ifeng.com/c/8y7d9aLgSx1"},{"id":"sig_022","title":"女式套装裤子厂家、品牌","region":"CN","platform":"1688","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】橘芷冬季新品上新韩系洋气时髦高级感翻领上衣裤子两件套女830. 回头率: 18%. 一件代发. 7天包换. 48小时发货. ￥ 139.0. 成交9 笔.… 来源：https://www.google.com/goto?url=CAESgQEBxCJF13Yx4rkpmQVGRt_t93xU-7RTIBEdLRiMt0CBt187IfdNTFY7ykwWCyged3eCVW_kNcgr3QxCO8XBs9S1Cxf1O7fo9eSNcZKvIUwvKHIe9dHz_zWZeyBVW8Og8bkTbhiNmNcEoPnPiH_tqHQCh6k3DPbWrn6wopM5EvudTQ4&gsessionid=_3tuExM5htzqeEl56sFhWxrGLOOrHW-v0TB4hrIcIkgrf0ronWJl4w"},{"id":"sig_027","title":"月流水800万的AI探店生意：AI视频第一个跑通的变现闭环 - …","region":"CN","platform":"小红书","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】90秒短片3000元起；3分钟宴席全景定制5800；月度IP打包12800，包含3条定制视频加统一封面体系加配套图文。 除了餐饮，偶尔也会有一些其他品牌看中这种… 来源：https://www.google.com/goto?url=CAESYgHEIkXXs75Td9pLxBbSIDdkbxeMknrSxfMjxtb2VJOfSg-xl9gBUUMFeFQ5fnpnDpIag8_eLNa5cyCO_JUL2q1mj2dQMncTcrGAIvNJ5Q3S3qwsw55p31_zRmMcHoErwTKw&gsessionid=JUFURmZQys-uBxGubRLum5Y5HEKSQyazQpjLcVlQq0lrCourRxsTWQ"},{"id":"sig_037","title":"https://rule.taobao.com/detail-5…","region":"GLOBAL","platform":"数码情报","category":"综合热点","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】没有此网页的信息。… 来源：https://rule.taobao.com/detail-5507.htm?spm=a2177.12575716.0.0.6f7b17eas4bMWM"},{"id":"sig_042","title":"波导手机哪款机型更值得买？热门机型测评汇总推荐","region":"GLOBAL","platform":"数码情报","category":"3C数码","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】K80是三款中最具竞争力的机型。测评指出，它的天玑7020芯片能轻松应对主流手游，120Hz高刷屏幕操作跟手，33W快充一小时可充满80%以上。不足是拍照表现中… 来源：https://www.google.com/goto?url=CAESdQHEIkXXNs830m6EzHhQmG4lZQd9mR4jAOr6bpiX7qzDoQ8hnePvwgohdLhZD6aqxxjDDvzYMHNe-mF8DND92czhJnItEwU5INOOkogH1ICmEJ3PQ5E4B9l7WpJFguuIjX2jnT9TyUKutSXxVMl__7ycgem6BQ&gsessionid=JnO5YT3F2IlQmV-oceQmJm2hrx3znHPWkwiye4KIqykzM-aWz1QLVA"},{"id":"sig_047","title":"Clarins 最新折扣信息| 2026 娇韵诗优惠券& 折扣码…","region":"GLOBAL","platform":"美妆情报","category":"美妆个护","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】这款洁面添加了能够提亮肌肤活力的橘子萃取精华和能够净化肌肤的辣木籽精华，温和清洁毛孔，去除老化角质，改善肌肤粗糙，焕发青春活力。 质地是透明啫喱状，里面带着细细… 来源：https://www.dealmoon.com/cn/stores/clarins?type=5&page=2"},{"id":"sig_052","title":"💄 尊貴美妝GIVEAWAY：打造你的終極光澤美肌！🫧 有機會 …","region":"GLOBAL","platform":"美妆情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】分享你旅行必備的護膚／美妝單品，以及原因 豐富獎品包括： Prada Beauty 眼線筆01 Nero (1.2g) YSL Pure Shot 盈潤透亮保濕… 来源：https://www.google.com/goto?url=CAESZQHEIkXXyt4JQzHJyZ8_TQqh_TtxgffWUvq0cxXHqRpeBenWqWxz3wM3hnldMhR5Fp_rTwfWAdBDj4a05UEXwoJ8cTsyJc82HofZ-F3rwhCnshe1ffSro2XejG8UleMf-D98kKFH&gsessionid=P9_CTK_suGAN_f4Y38vMmGt-7-e6QMcFhMhdw9xkz4aUMJUBWprm7w"},{"id":"sig_057","title":"春日悄悄长高 - 淘宝逛一逛","region":"GLOBAL","platform":"服饰情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】淘宝网页通过提供多样化的男装女装女鞋包包等商品服务，为消费者提供各类newbalance、converse、adidas、nike等运动鞋与篮球鞋购物体验。其中… 来源：https://www.google.com/goto?url=CAESaAHEIkXXzTgfZVIODUrHw6dqw-Cf8xPycVsqmxdTuJNkuWmarkN5gk8UdM8-Pwir4vluTyRqfOv4G3rcn9oT_d9Nb8OZgAAAQPw93slUIrsgaI5-zKLDGwbB8e4ble7xCwYnhBFCGSWk&gsessionid=rXIvfi-z4gcWASxOXkktA4ZV95DXpwHQZqxtqUe7Mbv8v3D6g1GY1g"},{"id":"sig_067","title":"最多就砂盤旁邊。 木薯已經跑到我沙發上了nonono不好","region":"GLOBAL","platform":"母婴宠物情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["母婴宠物情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】可以試試看豆腐砂（如果貓咪可以適應的話） 之前用pidan，後來用水魔素活性碳，都是不混用，單用豆腐砂貓咪偶爾帶出幾顆直接撿起來就可以了同樣是不穿拖鞋的人～.… 来源：https://www.google.com/goto?url=CAES6QQBxCJF1-DSnF77kfGIxQEcaLRGwP5bKUdaSDbqW788lZLY0ggAGApJ-rWJ6XXcr_66pOBx0Fy0UYINIhR_R13mf9Rc_SltLpTPALj5rFDjgN3knGWQO3IoDOZFqVE2tQJFjrOWeQmZ0k1XbG8Q_vzun-4wV0K9ws6qp1Z32EZ2Fk-ArF9QpYgveOSG5qtrTCllfwZ8vbkIOau5BcU1zXCI_V5rzRgqYobOAkTPqmXimJ7X_A98FEQ6_iGh7CmJ8vlV-Z7aIa2HkkW8agiyAkMmQjs0rWcSqBJ0CJGQuS01keISbYIJFkuSqibIQauULyJpeTTnEJV6KdxkHGkjRWNbporXMZjsfeeCGVAVeCxGoX4u83DiVbTe4HBtwrE-CKO8Ta1W9FACJzqju4dzpQV-FZqzhC2JYCbjaAu2iXCxv1xBHQCyhS6G6ka4kkS49W377eCMjEbQeE29qAOJE7YwtxRjsl251hF1lCj-yKhkV2R5FLByeMzCz3Pn1h1kWO3LAcuTrKLu5DXcEjY5vUeHIa01JfKkIe5HQoipUTB9ZfW0boWLAfN0HfdQkZS3Otq8N052q8GbCIegTnaRd3Z329pZJgoEgY-Y4HI1Sbq2FMihf-Cem_8pwwg1_ql5D7TViqTd2WYcnwnF6SmhcZCjapSWuSBojVZLnv9aaOSo7-Y_-ClBDN9g3bSJwA7NI-iiknNcR3w88M_t7qGScBFlrgF4o7ahnfqigBuU9omYxxSnYXEb8OyQUv0_34uukpGOVhiYpHPGO_ERmC4MOgkwgnRtphiSeQ7UEKAA9Qw0K5QvjDPCbROiIQ&gsessionid=Im-YYxu-Ee1Eo6Kh6u2T31g1BbaQ5nB9I3RqbYcLdDJ7jiF4r86yFg"},{"id":"sig_072","title":"居家日用百货全攻略从小商品油壶到厨房用品用具家用大全","region":"GLOBAL","platform":"家居情报","category":"美妆个护","price":"—","heat_score":72,"surge_rate":68,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】居家日用百货全攻略从小商品油壶到厨房用品用具家用大全 · 清洁用品：如抹布、清洁刷、垃圾袋、收纳篮等，保持家居环境整洁有序。 · 卫浴用品：毛巾、牙刷杯、肥皂盒… 来源：https://www.google.com/goto?url=CAESZAHEIkXXKVq1R_3f1RQL4KiAJGn04OV2_abbX7jO7lIIYlgfI94FmuvGwVXIkZ9vg7z_N7s3ShjHtugQlWGRK3hc22gxj311e-zC6hAMuih1BUXCg_VIwP3814EuM_XZ-Dl1tjY&gsessionid=j57z38MdYNVBJfyBxnhunOxWXhg45qCHTk9mnH717Zht3TU1WcqvFQ"},{"id":"amz_B0FHLPS8ZF","title":"Beats Solo 4 On-Ear Headphones, 50 Hours Battery Life - Meta…","region":"GLOBAL","platform":"Amazon","category":"3C数码","price":"—","heat_score":81,"surge_rate":65,"level":"A","trend_history":[51,56,61,66,71,76,81],"migration_path":["Amazon Best Sellers","3C数码","榜单第6名"],"ai_advice":"【Amazon Best Sellers 第6名·真商品】类目：3C数码；ASIN：B0FHLPS8ZF；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Beats-Solo-Ear-Headphones-Ultra-Lightweight/dp/B0FHLPS8ZF"},{"id":"amz_B07M6FL57T","title":"Huggies Little Snugglers Newborn Diapers, 31 Count | Newborn…","region":"GLOBAL","platform":"Amazon","category":"母婴玩具","price":"—","heat_score":81,"surge_rate":65,"level":"A","trend_history":[51,56,61,66,71,76,81],"migration_path":["Amazon Best Sellers","母婴玩具","榜单第6名"],"ai_advice":"【Amazon Best Sellers 第6名·真商品】类目：母婴玩具；ASIN：B07M6FL57T；热度为榜单位次估算，非销量。链接：https://www.amazon.com/Huggies-Snugglers-Diapers-Newborn-Packaging/dp/B07M6FL57T"},{"id":"sig_001","title":"Tik Tok商城新闻","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】TikTok跨境电商日报2026-10-27：美区黑五节点与平台新规速览. 汇总2026-10-27 TikTok跨境电商要闻：美区长筒靴走红、黑五筹备节点、菲… 来源：https://www.tiktok.com/discover/tik-tok%E5%95%86%E5%9F%8E%E6%96%B0%E9%97%BB"},{"id":"sig_006","title":"TikTok Shop店铺关闭流程","region":"GLOBAL","platform":"TikTok","category":"综合热点","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["TikTok情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】美区小店+广告投流+体系课程+陪跑答疑+美区资源对接,快速入门，3年TikTok卖家经验资深老师详细教学,从0到1，快速了解美区小店流量与变现玩法. 美区电商新… 来源：https://www.google.com/goto?url=CAESXQHEIkXXqiypnPtyLVriZrnay3S8J7m0N1IrqIePEgcM25GFOqcNfpA4cQTwjpDiRRJf0__JGpP-Gyun8nN7WXxvOJoH06XDU8BDcEK5JzR6HOuMwoCg7v9TQ7FN1A&gsessionid=Lghc3ph_LPhGUHnsd3iWu_oeZ_nxzDCg4xvLSJhQIbgH84VhNR-0UA"},{"id":"sig_011","title":"新增盲盒福袋禁售规则和商品发布管理规范的公示通知","region":"GLOBAL","platform":"Temu","category":"综合热点","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["Temu情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】盲盒/福袋商品，是指卖家通过盲盒、福袋形式销售的商品，具体是卖家在单个商品不同款式、多个商品或商品组合中，通过随机发货的形式，向消费者提供其中某一款式、某一商品… 来源：https://m.amz123.com/guide/aliexpress/gE8rOAdZ"},{"id":"sig_016","title":"阿里巴巴1688.com - 全球领先的采购批发平台,批发网","region":"CN","platform":"1688","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】新品中国风pe膜收纳盒防氧化首饰盒手链包装盒高级感手串展示盒. ￥1.60. 成交52万+件 · 卡通硅藻泥吸水垫浴室地垫卫生间防滑脚垫家用厕所吸收耐脏脚垫子.… 来源：https://dj.1688.com/ci_bb?a=1851593054&e=safKyB-EchFRapCOVl5B2-nvHj.EN59g8ONLcUieb6KDg-rK8LTb4oLLQq7u8RMeIsAT6j2qlr1Zor9N0W.-N2UB2iowDS3KtqCH.uxH.JSMmrXAwvzfulDvJZa2vSXGmTXo1vVWKtl6YMHpxZ3HYRrtfmGCXnLAHbKeADZQyJ.k56KvFq5HCJHGGeFe2ljpitAlk147icTc3iqnv9cNHfjZf8eeSpaqtX.4nEDNCMvPbhauAsWSmnLd-8qdH7gv4GXEvwiZXAk.zUSoABQ1egr5FRGXUdG15kI32EsCjWhNcaZt8l31CcNQGt7Xps1kJIEeeGCRpFYupx2y0zrupBaInUDBMny86AWdBkwb1C8W1x4pnoPjp15aFXuANVVELgJ8zlymbf8R0X0WaCEhXhlZukUz4FYkFJ.Hp5TlieXBeNvFy5obPN5gRglBLhdX.7G1gsHnIGQx.-HMQBXE11EFkTQAh.kZRThiw21SRUNaJ6DDkQAVqrtPhLyF.aqPmTIhLTwcrS-UaAnEwYEbssZPEMNOKG17xdR8sGD3L9j7Xc8.Rk.cSIrhdQGDgkFNOSMncBwkT7vVB91RJZ6lw4SyEj19JhUpIw9IRvPfFaZO5W35e4CcouFJ1ppsXuDsGro6jubZJEOylArRGK47Iqfa8hkUJ6.-Q4geI2MKZznhOnnvqJ3rOLF1OHrYJtn72BOCklb2GnUyWFvRCtZSQo6ubhx1eIjqpX2XctKfy8qQq71l9p0KNDmUJdwVWkJVA9vACux3qZphls1qXbqZJeh.BT8wb44hj-8fJt9FEfvVFFT8XecrWEERtGaj0DrCoy6JdXwZehRao5vsmeJm1ToZJhIR8XcUCuxYs.pKL.y6wpAxqyEUux0gxl1qk77MetsW1yuD2KSUzmgLJCQ9bmNi1sQzt50XY1ElHxGW9xyg7MRAP3knI0qjYky49hjUMfBxkV5-NTZgSuyixOQ0Zk14VTZDSYQqlHnpVKl9kJ6Jn9ARCK-qkjMTnG1RaC3TyJVtn6.cz9rjMsUyW11i-Co6uuKCJE9diNguOiKJvmKP9POsw.-4ac5JmnZMAQujedAg0wfvDW6MQyaBi.4WDF4R1Sn6XWFdGoWB2FJeBG8IrkaQCwrt7BlNclUAH4rNWFaoSESJvC.JKgssDKjhS-sNfObadqUkECCY4i6uUAtXk48urUKWsCb5ZSGbspUQh4J3wG4W9fSzanCblaeCPF04v6Rt1XDUz0C07QT9K-gZqVFaXz1El2jXVI-pkc9CUI4RwrGlqc7xiiiGwgNSadnNPznzNxTsQBlI5BWq0G6MhU4BU0ZyxrQBlKM6nkpeWC.tJJZE1GKjmFemTM0pMNSQ7JaeY82ZxQ5W30lObGNo-6rZ5A6lUdWgX6Qx9-NaABjX1CussekXpg7utVPXdA__&v=4&ap=19&rp=19&idx=19"},{"id":"sig_021","title":"没有货源可以做Shopee吗","region":"CN","platform":"1688","category":"综合热点","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["1688情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】当然可以！Shopee致力于成就每一种出海可能，因此首先明确，如果没有货源也是可以做Shopee的。当然如果您具备一定的货源基础，您会在商品成本上比其他卖家更有… 来源：https://www.google.com/goto?url=CAESZwHEIkXXGV6GhpFevVhrsq_2BSS0gnOjfkihU2_lVGyeAX8UPR_3yReKX8NMI3TUzZFgL5xRY6vjWbFni73VJ1T-7AEsn8xsDpH0Mc_onYhgHXQ9hx2SnAP4Bc4w7-s6kMG1pZkm3CY&gsessionid=_3tuExM5htzqeEl56sFhWxrGLOOrHW-v0TB4hrIcIkgrf0ronWJl4w"},{"id":"sig_026","title":"产品推荐海报模板","region":"CN","platform":"小红书","category":"家居百货","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["小红书情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】家居好物推荐实用不踩雷海报。画面中一位年轻女性怀抱收纳盒、毛巾和绿植等生活用品，背景为温馨家居场景。整体风格清新治愈，适合用于居家好物分享、生活类种草内容推广或… 来源：https://www.google.com/goto?url=CAESeQHEIkXXayGXDV3UU2S0jkVTW4rNXcHHadj1L2IuzzfDvrtAQyLUWVZQwWl7nygCZwUZWk4VHXhvizSe2kI03bx9Q1qC0gkBj4xcjCxuxXQ7Bfq0NkaKazrbdOq0DhngKgfVm-fbdB2fTStTdNYjAS_Zf-slKQgv5rg&gsessionid=JUFURmZQys-uBxGubRLum5Y5HEKSQyazQpjLcVlQq0lrCourRxsTWQ"},{"id":"sig_031","title":"2026抖音卖货攻略：从0到1教你卖自己的产品（新手必看）","region":"CN","platform":"抖音","category":"综合热点","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["抖音情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】这篇攻略按开店准备、选品定位、内容直播、投流放大、转化售后、数据复盘六个环节，把从0到1卖自己产品的操作步骤逐条拆开，供你对照执行。 ## 开店与账号准备抖音小… 来源：https://www.google.com/goto?url=CAEShAEBxCJF1wshA29qlnfWyK9Xr1hzJbYykkJLTmXUZKsCC6TrCVBD_C8q1po82OapAMni_5jNv2K0qac4YlsqH_IF_A747aO0oPssTb6-SKlxzk063UHoOKT48nxhoycM4tA7ABmTpKa-prz8eVj-QuZbhaunWD1_6Oyrtyp0DGM__ilxF68&gsessionid=ETs6f06pFjpxWDPg-q545TWzm5M6yBwizo-yYIonfuHxa4D6_zR_-Q"},{"id":"sig_041","title":"满电青春再出发！航嘉满电青年计划重庆大学城站精彩回顾","region":"GLOBAL","platform":"数码情报","category":"3C数码","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["数码情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】回到宿舍与桌面场景，充吧灵动M20、M30、M45桌面充电站均采用八口合一设计，以4个AC交流口和2C2A USB接口集中承接多设备用电，并提供20W、30W、… 来源：https://www.google.com/goto?url=CAESawHEIkXXNK_cgu3L92Gqz8jnwmQkW7DJsmDAJpiXIFW-mF-rUB1NU3zlx3kIB8I1DbLF5oEZQbJsxuHzoqNN0DQ2mrq92qHgQe3GU7rIDtOYDyHfdSs73NvnT1w94-AFWY9eu4Um5On4-ECM&gsessionid=JnO5YT3F2IlQmV-oceQmJm2hrx3znHPWkwiye4KIqykzM-aWz1QLVA"},{"id":"sig_046","title":"fanbeauty是什么牌子？品牌背景、产品线与选购要点全解析","region":"GLOBAL","platform":"美妆情报","category":"美妆个护","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["美妆情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】FAN BEAUTY DIARY（中文名美黎汎）是2018年由范冰冰创立的国货美妆品牌，主打面膜、护肤、彩妆等品类，定位中高端，核心理念为科学与自然结合。… 来源：https://kuku.baidu.com/landing/tscp_doc/f4c82ac14dc6759c13712525c42950bb"},{"id":"sig_056","title":"洞洞鞋设计制作- 模板","region":"GLOBAL","platform":"服饰情报","category":"服饰鞋包","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["服饰情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】稿定为您提供98 个洞洞鞋设计模板，支持一键替换和快速编辑，轻松制作专属设计。无论是图片、视频、PPT、H5页面等宣传物料，这里都能满足您的需求。更多洞洞鞋相关… 来源：https://www.google.com/goto?url=CAESZgHEIkXXC2Hjw60lMBLIkZf6A4QN6n54-W8Q-fupjfZP7mufzLMRPXj3xLZMJq_MtS6y--YSgWCp4nMOyGCvimvFfBjkf1aX-gBC2qpqialRXF-3BAQUnF60LQqNUeQpaIsbaPMdhw&gsessionid=rXIvfi-z4gcWASxOXkktA4ZV95DXpwHQZqxtqUe7Mbv8v3D6g1GY1g"},{"id":"sig_076","title":"VPLUS 生活百貨| #A91b- 100g 紫薯粉| 0添加…","region":"GLOBAL","platform":"家居情报","category":"综合热点","price":"—","heat_score":72,"surge_rate":60,"level":"B","trend_history":[32,35,38,41,44,47,50],"migration_path":["家居情报情报","跨源核对","供应链跟进"],"ai_advice":"【信号强度估算，非平台实时榜】BG20109, VPLUS 生活百貨, #A91b- 100g 紫薯粉, 0添加，全天然成分，原色原香|最佳食用日期：1 OCT 2027, 款式: 2, 配… 来源：https://www.google.com/goto?url=CAESqwQBxCJF19FLokpz1eKjvYTXiUVPrwVEkIrBnCSx_dw7HKAizWkdUZzI8oY7F86GHtBn5OTf09XWFW4OBWiSSVjqjcNSPHryJqAm1DJMnvBACO9FhgCxwVZ___2T97wY8Wgj4FqHQQvpSV8D3dxZwwCH1Ezi99BmMvRsr4rOkD-adjjp8CHIopTdm3KSITYsKSq88jHePRHNUeuI3HBmBsZL5qmMAJUlkL9rjBQ-oPKUt845w5XTMd7kHs6I3GuhyLwTAR1g6CpynGAZMllC6iUeWDHJGD3B9NiWLa-ULoBorD3FppgGGBt92VgKV930F5vTkzt4tLtu9Ix-LjaCEIo5CxMcdcVFwwhoBst1KM_-EijJVPAIbt-igZRI9SuELy4id2deirK2COLm3TRnZSQBRUpcFW_r0oP8JxLs_Q1GwyF-nStimVN6yMk6dqM3WbK0gu0EyHk5sa6fRo0T3GjFLS2eAzoE9Yv4Tmvfu-_4SKjERVNOz23falVSR03fbLq6DN6l-ghd9vmEiPZXuBmSg1M0AvHfsyYFM7jXzpTEoC2dUvPRMVgdxvxcyMBpsLnS5TJZ0NNUdOCgBvGytM7M0QuiWY72C2yi0_xdjz1TkzdUNdIWE9BUedv5_-AZNXxNIH2I0xfU9fWoRqKMeziTldbf-cHCBSo2MevnTsDeR5mFrmiW99eUt0vOE3Cj-i1i1GsBhmG0y1WtMH9p4QKsm5jPwmP6RZ8uIeE&gsessionid=j57z38MdYNVBJfyBxnhunOxWXhg45qCHTk9mnH717Zht3TU1WcqvFQ"}],"mode":"live","updated":1795358157};
+</script>
+</head>
+<body class="min-h-screen flex flex-col text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- 突发预警顶部悬浮横幅 (默认隐藏，触发新爆款时激活) -->
+    <div id="urgent-banner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-3xl bg-gradient-to-r from-red-950/95 via-red-900/95 to-amber-950/95 border border-red-500/80 text-white px-4 py-2.5 rounded-xl shadow-[0_0_30px_rgba(239,68,68,0.45)] flex items-center justify-between gap-3 backdrop-blur-md transition-all">
+        <div class="flex items-center gap-3">
+            <span class="flex h-3 w-3 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
+            <span class="text-xs font-mono uppercase tracking-wider bg-red-500/30 border border-red-400/50 px-2 py-0.5 rounded text-red-200 font-bold">S级核爆预警</span>
+            <p id="urgent-banner-text" class="text-sm font-medium truncate">捕捉到突发爆款：【AI智能翻译骨传导耳机】在抖音与TikTok双端斜率突破 12.4x！</p>
+        </div>
+        <button onclick="dismissBanner()" class="text-xs text-red-200 hover:text-white px-2 py-1 rounded bg-white/10 hover:bg-white/20 transition">忽略</button>
+    </div>
+
+    <!-- 顶部全局导航与状态栏 -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-cyan-500/20 px-4 py-2.5">
+        <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- 品牌标题与脉冲呼吸灯 -->
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center radar-ping">
+                    <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-mono font-bold text-base sm:text-lg tracking-tight text-white">
+                            启源 <span class="text-cyan-400">//</span> <span class="text-slate-200 font-sans font-semibold text-sm sm:text-base">全球媒体商品爆款监听中枢</span>
+                        </h1>
+                        <span class="hidden md:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            LIVE 监听中
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 hidden sm:block">实时跨平台声量/销量斜率监测 · 全球选品作战室 v4.2</p>
+                </div>
+            </div>
+
+            <!-- 实时采集状态指标条 -->
+            <div class="hidden xl:flex items-center gap-5 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-xl font-mono text-xs">
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-400">今日监控商品库</span>
+                    <span id="stat-total-monitored" class="text-cyan-400 font-bold text-sm">1,482,910</span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-400">突发爆款预警</span>
+                    <span id="stat-alert-count" class="text-red-400 font-bold text-sm">128 <span class="text-[10px] font-normal text-red-300">(+14)</span></span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-400">平均爆发加速度</span>
+                    <span class="text-amber-400 font-bold text-sm">4.85x / hr</span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-400">API 采集节点延迟</span>
+                    <span id="stat-latency" class="text-emerald-400 font-bold text-sm">18ms</span>
+                </div>
+            </div>
+
+            <!-- 交互操作与模拟突发按钮 -->
+            <div class="flex items-center gap-2">
+                <button onclick="triggerSimulatedBurst()" class="group relative inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold text-white bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 shadow-[0_0_20px_rgba(239,68,68,0.35)] border border-red-400/40 transition-all active:scale-95 cursor-pointer">
+                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                    <span>⚡ 模拟新爆款突发</span>
+                </button>
+                <button onclick="openSavedModal()" class="relative px-3 py-2 rounded-lg text-xs font-medium bg-slate-800/90 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 transition flex items-center gap-1.5 cursor-pointer">
+                    <span>⭐ 选品库</span>
+                    <span id="saved-count-badge" class="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 font-mono text-[11px]">2</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 二级过滤栏：地区阵地切换 + 搜索框 + 时间窗口 -->
+        <div class="max-w-[1920px] mx-auto mt-2.5 pt-2.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+            <!-- 地区阵地切换 Tabs -->
+            <div class="flex items-center gap-1.5 bg-slate-950/70 p-1 rounded-xl border border-slate-800/90 overflow-x-auto max-w-full">
+                <button onclick="setRegionFilter('all')" id="tab-all" class="region-tab active px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 whitespace-nowrap cursor-pointer">
+                    <span>🌐 全部全球 (Global)</span>
+                </button>
+                <button onclick="setRegionFilter('domestic')" id="tab-domestic" class="region-tab px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+                    <span>🇨🇳 国内阵地</span>
+                    <span class="text-[10px] text-slate-500 hidden sm:inline">抖音·小红书·淘宝·快手·B站</span>
+                </button>
+                <button onclick="setRegionFilter('overseas')" id="tab-overseas" class="region-tab px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+                    <span>🌍 海外阵地</span>
+                    <span class="text-[10px] text-slate-500 hidden sm:inline">TikTok·Amazon·IG·Temu·YT</span>
+                </button>
+            </div>
+
+            <!-- 搜索与时间窗口筛选 -->
+            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                <div class="relative flex-1 sm:w-64">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜索商品名、关键词、平台或归因..." class="w-full bg-slate-900/90 border border-slate-700/80 focus:border-cyan-400 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none transition">
+                </div>
+
+                <div class="flex items-center bg-slate-900/90 border border-slate-700/80 rounded-lg p-0.5 text-xs font-mono">
+                    <button onclick="setTimeWindow('15m')" class="time-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">15m</button>
+                    <button onclick="setTimeWindow('1h')" class="time-btn active px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-semibold transition cursor-pointer">1H</button>
+                    <button onclick="setTimeWindow('6h')" class="time-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">6H</button>
+                    <button onclick="setTimeWindow('24h')" class="time-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">24H</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体三栏作战室布局 -->
+    <main class="flex-1 max-w-[1920px] w-full mx-auto p-3 sm:p-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- 左侧边栏：突发爆款实时脉冲流 (Live Alert Ticker) [3列] -->
+        <aside class="lg:col-span-3 flex flex-col glass-panel rounded-2xl overflow-hidden h-[540px] lg:h-[calc(100vh-138px)] lg:sticky lg:top-[122px]">
+            <div class="px-4 py-3 border-b border-slate-800/90 flex items-center justify-between bg-slate-900/60">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <h2 class="text-sm font-bold text-white tracking-wide">突发爆款实时脉冲流</h2>
+                </div>
+                <button id="toggle-stream-btn" onclick="togglePulseStream()" class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition cursor-pointer">
+                    ⏸ 暂停滚动
+                </button>
+            </div>
+
+            <!-- 脉冲统计提示条 -->
+            <div class="px-4 py-1.5 bg-slate-950/60 border-b border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                <span>实时捕捉频率: ~3.5s/条</span>
+                <span class="text-emerald-400">● 哨兵节点在线</span>
+            </div>
+
+            <!-- 脉冲卡片滚动容器 -->
+            <div id="pulse-stream-list" class="flex-1 overflow-y-auto p-3 space-y-2.5">
+                <!-- 动态渲染脉冲卡片 -->
+            </div>
+        </aside>
+
+        <!-- 中间核心区：爆款趋势矩阵与雷达看板 [6列] -->
+        <section class="lg:col-span-6 flex flex-col gap-4">
+            <!-- 顶部 4 个核心 KPI 概览卡片（带迷你 Sparkline） -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <!-- KPI 1 -->
+                <div class="glass-panel rounded-xl p-3 flex flex-col justify-between relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">全网爆款声量指数</span>
+                        <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded" id="kpi-voice-pct">+38.4%</span>
+                    </div>
+                    <div class="my-1.5 flex items-baseline justify-between">
+                        <span class="text-xl font-mono font-bold text-white"><span id="kpi-voice-pts">94.8</span><span class="text-xs text-cyan-400 ml-0.5">pts</span></span>
+                    </div>
+                    <svg class="w-full h-7" viewBox="0 0 100 28" preserveAspectRatio="none">
+                        <path d="M0,24 L15,20 L30,22 L45,14 L60,16 L75,8 L90,10 L100,2" fill="none" stroke="#22D3EE" stroke-width="2" />
+                    </svg>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="glass-panel rounded-xl p-3 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">跨海共振商品数</span>
+                        <span class="text-[11px] font-mono text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded" id="kpi-reson-pct">+19款</span>
+                    </div>
+                    <div class="my-1.5 flex items-baseline justify-between">
+                        <span class="text-xl font-mono font-bold text-white"><span id="kpi-sku">342</span><span class="text-xs text-slate-400 ml-1">SKU</span></span>
+                    </div>
+                    <svg class="w-full h-7" viewBox="0 0 100 28" preserveAspectRatio="none">
+                        <path d="M0,25 L20,22 L40,18 L55,20 L70,11 L85,7 L100,3" fill="none" stroke="#F59E0B" stroke-width="2" />
+                    </svg>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="glass-panel rounded-xl p-3 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">S级核爆早期捕获</span>
+                        <span class="text-[11px] font-mono text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded">高危抢占</span>
+                    </div>
+                    <div class="my-1.5 flex items-baseline justify-between">
+                        <span id="kpi-s-tier" class="text-xl font-mono font-bold text-red-400"><span id="kpi-stier-num">27</span><span class="text-xs text-slate-400 ml-1">款</span></span>
+                    </div>
+                    <svg class="w-full h-7" viewBox="0 0 100 28" preserveAspectRatio="none">
+                        <path d="M0,26 L25,25 L50,23 L70,18 L85,9 L100,1" fill="none" stroke="#EF4444" stroke-width="2" />
+                    </svg>
+                </div>
+
+                <!-- KPI 4 -->
+                <div class="glass-panel rounded-xl p-3 flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">小时预估总GMV增量</span>
+                        <span class="text-[11px] font-mono text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded" id="kpi-gmv-pct">+64.2%</span>
+                    </div>
+                    <div class="my-1.5 flex items-baseline justify-between">
+                        <span class="text-xl font-mono font-bold text-white">$<span id="kpi-gmv">4.82</span><span class="text-xs text-purple-400 ml-0.5">M</span></span>
+                    </div>
+                    <svg class="w-full h-7" viewBox="0 0 100 28" preserveAspectRatio="none">
+                        <path d="M0,22 L18,19 L36,15 L54,17 L72,9 L88,6 L100,2" fill="none" stroke="#A855F7" stroke-width="2" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 爆款商品实时监控主列表 -->
+            <div class="glass-panel rounded-2xl flex flex-col flex-1 overflow-hidden">
+                <!-- 列表过滤与排序工具栏 -->
+                <div class="p-3.5 border-b border-slate-800/90 flex flex-wrap items-center justify-between gap-2.5 bg-slate-900/50">
+                    <!-- 类目过滤胶囊 -->
+                    <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                        <button onclick="setCategoryFilter('all')" class="cat-btn active px-2.5 py-1 rounded-lg text-xs font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 whitespace-nowrap cursor-pointer">全部类目</button>
+                        <button onclick="setCategoryFilter('3C数码')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">3C数码</button>
+                        <button onclick="setCategoryFilter('美妆个护')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">美妆个护</button>
+                        <button onclick="setCategoryFilter('家居百货')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">家居百货</button>
+                        <button onclick="setCategoryFilter('服饰鞋包')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">服饰鞋包</button>
+                        <button onclick="setCategoryFilter('母婴玩具')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">母婴玩具</button>
+                        <button onclick="setCategoryFilter('宠物用品')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">宠物用品</button>
+                        <button onclick="setCategoryFilter('综合热点')" class="cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer">综合热点</button>
+                    </div>
+
+                    <!-- 排序选择器 -->
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="text-slate-400 hidden sm:inline">排序指标:</span>
+                        <select id="sort-select" onchange="handleSort()" class="bg-slate-900 border border-slate-700 text-cyan-300 rounded-lg px-2.5 py-1 text-xs font-medium focus:outline-none focus:border-cyan-400 cursor-pointer">
+                            <option value="acceleration">🚀 爆发加速度 (斜率)</option>
+                            <option value="heat">🔥 全网热度值</option>
+                            <option value="resonance">🌐 跨平台共振数</option>
+                            <option value="gmv">💰 预估小时GMV</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 响应式表格容器 -->
+                <div class="overflow-x-auto flex-1">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800/90 text-[11px] font-mono text-slate-400 uppercase bg-slate-950/40">
+                                <th class="py-2.5 pl-4 pr-2 w-12">排名</th>
+                                <th class="py-2.5 px-3">爆款商品 & 跨平台联动</th>
+                                <th class="py-2.5 px-2 hidden sm:table-cell">实时热度曲线</th>
+                                <th class="py-2.5 px-2 text-right">加速度 / 增速</th>
+                                <th class="py-2.5 px-3 hidden md:table-cell">AI 归因标签</th>
+                                <th class="py-2.5 pl-2 pr-4 text-right">作战操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="radar-table-body" class="divide-y divide-slate-800/60 text-xs">
+                            <!-- 动态渲染商品行 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 右侧边栏：全网舆情与AI选品情报舱 [3列] -->
+        <aside class="lg:col-span-3 flex flex-col gap-4">
+            
+            <!-- 模块1：当前选中商品多维情报分析舱 -->
+            <div id="intel-detail-card" class="glass-panel rounded-2xl p-4 border border-cyan-500/30 relative overflow-hidden">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">AI 选品决策舱</span>
+                        <span class="text-[11px] text-slate-400 font-mono">实时诊断</span>
+                    </div>
+                    <button onclick="openProductModal(selectedProductId)" class="text-[11px] text-cyan-400 hover:text-cyan-300 underline cursor-pointer">深度报告 ↗</button>
+                </div>
+
+                <!-- 动态填充的当前选中商品头部 -->
+                <div id="intel-header" class="flex items-start gap-3 mb-3 pb-3 border-b border-slate-800/80">
+                    <!-- JS 注入 -->
+                </div>
+
+                <!-- 分平台流量占比条 -->
+                <div class="mb-3.5">
+                    <div class="flex items-center justify-between text-[11px] mb-1.5">
+                        <span class="text-slate-400">跨平台声量/流量占比</span>
+                        <span id="intel-resonance-badge" class="font-mono text-amber-400">4平台共振</span>
+                    </div>
+                    <div id="intel-platform-bars" class="space-y-2">
+                        <!-- JS 注入平台进度条 -->
+                    </div>
+                </div>
+
+                <!-- 达人带货与价格带分布简报 -->
+                <div id="intel-metrics-grid" class="grid grid-cols-2 gap-2 mb-3.5 text-xs">
+                    <!-- JS 注入 -->
+                </div>
+
+                <!-- AI 决策建议框 -->
+                <div id="intel-ai-advice" class="bg-slate-950/80 border border-cyan-500/25 rounded-xl p-3 space-y-2 text-xs">
+                    <!-- JS 注入建议 -->
+                </div>
+            </div>
+
+            <!-- 模块2：跨平台爆款迁移路径图 -->
+            <div class="glass-panel rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xs font-bold text-white flex items-center gap-1.5">
+                        <span class="text-cyan-400">⇄</span> 跨平台爆款迁移路径拓扑
+                    </h3>
+                    <span class="text-[10px] font-mono text-slate-400">近6小时监测</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mb-3">追踪“国内种草 -> 海外外溢”与“海外爆火 -> 国内平替”双向传导链路</p>
+
+                <!-- SVG 动态拓扑图 -->
+                <div class="bg-slate-950/70 rounded-xl p-2 border border-slate-800/80">
+                    <svg class="w-full h-36" viewBox="0 0 300 135">
+                        <!-- 左侧国内节点 -->
+                        <rect x="8" y="14" width="76" height="28" rx="6" fill="rgba(6,182,212,0.15)" stroke="#06B6D4" stroke-width="1"/>
+                        <text x="46" y="32" fill="#22D3EE" font-size="11" font-weight="bold" text-anchor="middle">抖音 Douyin</text>
+
+                        <rect x="8" y="54" width="76" height="28" rx="6" fill="rgba(244,63,94,0.15)" stroke="#F43F5E" stroke-width="1"/>
+                        <text x="46" y="72" fill="#FB7185" font-size="11" font-weight="bold" text-anchor="middle">小红书 RED</text>
+
+                        <rect x="8" y="94" width="76" height="28" rx="6" fill="rgba(245,158,11,0.15)" stroke="#F59E0B" stroke-width="1"/>
+                        <text x="46" y="112" fill="#FBBF24" font-size="11" font-weight="bold" text-anchor="middle">1688/淘宝</text>
+
+                        <!-- 右侧海外节点 -->
+                        <rect x="216" y="14" width="76" height="28" rx="6" fill="rgba(16,185,129,0.15)" stroke="#10B981" stroke-width="1"/>
+                        <text x="254" y="32" fill="#34D399" font-size="11" font-weight="bold" text-anchor="middle">TikTok Shop</text>
+
+                        <rect x="216" y="54" width="76" height="28" rx="6" fill="rgba(139,92,246,0.15)" stroke="#8B5CF6" stroke-width="1"/>
+                        <text x="254" y="72" fill="#A78BFA" font-size="11" font-weight="bold" text-anchor="middle">Amazon US</text>
+
+                        <rect x="216" y="94" width="76" height="28" rx="6" fill="rgba(59,130,246,0.15)" stroke="#3B82F6" stroke-width="1"/>
+                        <text x="254" y="112" fill="#60A5FA" font-size="11" font-weight="bold" text-anchor="middle">Temu/SHEIN</text>
+
+                        <!-- 中央AI路由枢纽 -->
+                        <circle cx="150" cy="68" r="22" fill="rgba(15,23,42,0.95)" stroke="#22D3EE" stroke-width="1.5"/>
+                        <text x="150" y="65" fill="#F8FAFC" font-size="9" font-weight="bold" text-anchor="middle">跨海时差</text>
+                        <text x="150" y="76" fill="#22D3EE" font-size="9" font-family="monospace" text-anchor="middle">36h窗口</text>
+
+                        <!-- 动态连接线 -->
+                        <path d="M84,28 C115,28 120,55 128,62" fill="none" stroke="#22D3EE" stroke-width="1.5" class="flow-line"/>
+                        <path d="M84,68 L128,68" fill="none" stroke="#FB7185" stroke-width="1.5" class="flow-line"/>
+                        <path d="M172,62 C185,55 190,28 216,28" fill="none" stroke="#34D399" stroke-width="2" class="flow-line"/>
+                        <path d="M172,68 L216,68" fill="none" stroke="#A78BFA" stroke-width="1.5" class="flow-line"/>
+                        <path d="M172,74 C185,82 190,108 216,108" fill="none" stroke="#60A5FA" stroke-width="1.5" class="flow-line"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 模块3：高频爆款关键词云 & 飙升品类榜 -->
+            <div class="glass-panel rounded-2xl p-4">
+                <h3 class="text-xs font-bold text-white mb-2.5 flex items-center justify-between">
+                    <span>🔥 全网热搜话题榜 & 赛道强度</span>
+                    <span class="text-[10px] font-mono text-cyan-400" id="wc-note">真采标题</span>
+                </h3>
+                <!-- 关键词云标签 -->
+                <div class="flex flex-wrap gap-1.5 mb-3.5" id="wordcloud-tags">
+                    <span onclick="quickSearch('AI翻译')" class="px-2 py-1 rounded-md text-[11px] font-medium bg-red-500/15 text-red-300 border border-red-500/30 cursor-pointer hover:bg-red-500/25 transition">#AI翻译耳机 +680%</span>
+                    <span onclick="quickSearch('磁吸')" class="px-2 py-1 rounded-md text-[11px] font-medium bg-amber-500/15 text-amber-300 border border-amber-500/30 cursor-pointer hover:bg-amber-500/25 transition">#磁吸移动电源 +410%</span>
+                    <span onclick="quickSearch('胶原')" class="px-2 py-1 rounded-md text-[11px] font-medium bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 cursor-pointer hover:bg-cyan-500/25 transition">#重组胶原蛋白 +345%</span>
+                    <span onclick="quickSearch('露营')" class="px-2 py-1 rounded-md text-[11px] font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 cursor-pointer hover:bg-emerald-500/25 transition">#超轻钛金属露营 +290%</span>
+                    <span onclick="quickSearch('宠物')" class="px-2 py-1 rounded-md text-[11px] font-medium bg-purple-500/15 text-purple-300 border border-purple-500/30 cursor-pointer hover:bg-purple-500/25 transition">#智能除臭猫砂盆 +265%</span>
+                </div>
+
+                <!-- 赛道强度（真算） -->
+                <div class="space-y-2 text-[11px]" id="category-bars">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-slate-300">智能穿戴与AI硬件 (3C数码)</span>
+                            <span class="font-mono text-cyan-400">96.4 分</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full" style="width: 96%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-slate-300">功效型便携护肤 (美妆个护)</span>
+                            <span class="font-mono text-amber-400">88.2 分</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-slate-300">懒人桌面收纳与光影氛围 (家居)</span>
+                            <span class="font-mono text-emerald-400">81.5 分</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full" style="width: 81%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- 商品深度监控报告弹窗 Modal -->
+    <div id="detail-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel border border-cyan-500/40 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-5 shadow-2xl animate-slide-in">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold">RADAR DEEP DIVE</span>
+                    <h3 id="modal-title" class="text-base font-bold text-white">商品深度监控报告</h3>
+                </div>
+                <button onclick="closeModal('detail-modal')" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800/80 cursor-pointer">✕</button>
+            </div>
+            <div id="modal-body" class="py-4 space-y-4 text-xs">
+                <!-- 动态注入详情报告 -->
+            </div>
+            <div class="pt-3 border-t border-slate-800 flex justify-end gap-2">
+                <button onclick="exportReportText()" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-medium cursor-pointer">📋 复制监控简报</button>
+                <button onclick="closeModal('detail-modal')" class="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-semibold cursor-pointer">完成</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 选品库抽屉/弹窗 Modal -->
+    <div id="saved-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel border border-cyan-500/40 rounded-2xl max-w-xl w-full p-5 shadow-2xl animate-slide-in">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h3 class="text-base font-bold text-white">⭐ 已加入作战室选品库 (<span id="modal-saved-count">0</span>)</h3>
+                <button onclick="closeModal('saved-modal')" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800/80 cursor-pointer">✕</button>
+            </div>
+            <div id="saved-list-container" class="py-4 space-y-2.5 max-h-80 overflow-y-auto text-xs">
+                <!-- 动态渲染已保存商品 -->
+            </div>
+            <div class="pt-3 border-t border-slate-800 flex justify-end">
+                <button onclick="closeModal('saved-modal')" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium cursor-pointer">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部轻提示 Toast -->
+    <div id="toast-msg" class="hidden fixed bottom-5 right-5 z-50 bg-slate-900/95 border border-cyan-400/60 text-cyan-200 px-4 py-2.5 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2">
+        <span class="text-cyan-400">✔</span>
+        <span id="toast-text">操作成功</span>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. 核心数据源：国内外全平台爆款监控数据库
+        // ==========================================
+        const PRODUCTS_DB = [
+            {
+                id: 'PRD-1001',
+                name: 'AI实时同声传译骨传导蓝牙耳机',
+                category: '3C数码',
+                region: 'all', // 同时覆盖国内与海外
+                emoji: '🎧',
+                tier: 'S级核爆',
+                acceleration: 11.8, // 爆发加速度倍数
+                growthRate: '+540%',
+                heat: 98.6,
+                resonanceCount: 5,
+                gmvHourly: 84200,
+                priceRange: '¥199 - ¥299 / $39.9',
+                platforms: [
+                    { name: '抖音', pct: 38, color: 'bg-cyan-400' },
+                    { name: 'TikTok', pct: 34, color: 'bg-emerald-400' },
+                    { name: '小红书', pct: 16, color: 'bg-rose-400' },
+                    { name: 'Amazon', pct: 12, color: 'bg-amber-400' }
+                ],
+                migrationTag: '抖音 -> TikTok 跨海共振',
+                aiAttribution: '痛点场景视频破圈',
+                influencerSplit: '腰部科技测评达人占比 62%，头部直播间切片占比 28%',
+                trendPoints: [18, 22, 25, 34, 48, 69, 88, 99],
+                aiAdvice: {
+                    timing: '极佳窗口期（海外TikTok美区刚进入爬坡期，领先竞品约48小时）',
+                    supplyChain: '深圳华强北公模方案成熟，建议定制双语包装并优先备货海外仓。',
+                    risk: '注意海外专利侵权排查及蓝牙FCC认证合规性。'
+                }
+            },
+            {
+                id: 'PRD-1002',
+                name: '次抛型重组III型胶原蛋白抗皱精华棒',
+                category: '美妆个护',
+                region: 'domestic',
+                emoji: '🧪',
+                tier: 'S级核爆',
+                acceleration: 9.4,
+                growthRate: '+420%',
+                heat: 95.2,
+                resonanceCount: 4,
+                gmvHourly: 112500,
+                priceRange: '¥89 - ¥159',
+                platforms: [
+                    { name: '小红书', pct: 46, color: 'bg-rose-400' },
+                    { name: '抖音', pct: 36, color: 'bg-cyan-400' },
+                    { name: '淘宝/天猫', pct: 12, color: 'bg-amber-400' },
+                    { name: '快手', pct: 6, color: 'bg-orange-400' }
+                ],
+                migrationTag: '小红书种草 -> 抖音收割',
+                aiAttribution: '达人矩阵集中种草',
+                influencerSplit: '成分党医生/护肤博主密集背书，KOC图文铺量超3200篇',
+                trendPoints: [24, 29, 38, 45, 61, 74, 86, 95],
+                aiAdvice: {
+                    timing: '国内主升浪中段，适合通过抖音信息流千川投放快速放大ROI。',
+                    supplyChain: '广州/上海BFS无菌灌装代工厂排期紧张，需提前锁定包材产能。',
+                    risk: '功效宣称需严格遵循化妆品监督管理条例，避免违禁词限流。'
+                }
+            },
+            {
+                id: 'PRD-1003',
+                name: '磁吸悬浮旋转宇航员氛围小夜灯蓝牙音箱',
+                category: '家居百货',
+                region: 'overseas',
+                emoji: '🪐',
+                tier: 'A级飙升',
+                acceleration: 8.2,
+                growthRate: '+365%',
+                heat: 91.4,
+                resonanceCount: 4,
+                gmvHourly: 53400,
+                priceRange: '$24.9 - $34.9',
+                platforms: [
+                    { name: 'TikTok', pct: 48, color: 'bg-emerald-400' },
+                    { name: 'Instagram', pct: 26, color: 'bg-purple-400' },
+                    { name: 'Amazon', pct: 16, color: 'bg-amber-400' },
+                    { name: 'Temu', pct: 10, color: 'bg-orange-400' }
+                ],
+                migrationTag: 'IG Reels 爆火 -> TikTok 转化',
+                aiAttribution: '高颜值桌面改造视觉冲击',
+                influencerSplit: '海外家居RoomTour博主自发带火，完播率高达 44.8%',
+                trendPoints: [15, 19, 28, 35, 52, 68, 80, 91],
+                aiAdvice: {
+                    timing: '礼品季与桌面美学热潮叠加，欧美及日韩市场客单价溢价空间高。',
+                    supplyChain: '义乌/中山灯饰产业带现货充足，支持一件代发及Logo镭雕定制。',
+                    risk: '磁悬浮组件运输防震包装需加强，降低海外退货率。'
+                }
+            },
+            {
+                id: 'PRD-1004',
+                name: '云感裸肤高腰提臀鲨鱼皮瑜伽打底裤',
+                category: '服饰鞋包',
+                region: 'all',
+                emoji: '🧘‍♀️',
+                tier: 'A级飙升',
+                acceleration: 7.6,
+                growthRate: '+295%',
+                heat: 89.0,
+                resonanceCount: 5,
+                gmvHourly: 96800,
+                priceRange: '¥69 - ¥119 / $19.9',
+                platforms: [
+                    { name: '抖音', pct: 32, color: 'bg-cyan-400' },
+                    { name: 'SHEIN', pct: 28, color: 'bg-purple-400' },
+                    { name: 'TikTok', pct: 24, color: 'bg-emerald-400' },
+                    { name: '小红书', pct: 16, color: 'bg-rose-400' }
+                ],
+                migrationTag: '国内供应链 -> SHEIN/TK 同步爆单',
+                aiAttribution: '季节性需求激增',
+                influencerSplit: '健身穿搭垂直达人实测对比视频带动自然搜索暴涨',
+                trendPoints: [30, 34, 41, 49, 58, 70, 81, 89],
+                aiAdvice: {
+                    timing: '换季刚需品类，复购率高，适合搭配运动内衣做组合装提升客单价。',
+                    supplyChain: '浙江义乌/诸暨无缝针织工厂柔性快反，7天可出新款配色。',
+                    risk: '尺码退换货率敏感，建议优化详情页欧美/亚洲双版尺码对照表。'
+                }
+            },
+            {
+                id: 'PRD-1005',
+                name: '超轻折叠纯钛户外露营便携咖啡手冲壶',
+                category: '家居百货',
+                region: 'domestic',
+                emoji: '⛺',
+                tier: 'A级飙升',
+                acceleration: 6.9,
+                growthRate: '+248%',
+                heat: 84.7,
+                resonanceCount: 3,
+                gmvHourly: 41200,
+                priceRange: '¥149 - ¥229',
+                platforms: [
+                    { name: '小红书', pct: 52, color: 'bg-rose-400' },
+                    { name: 'B站', pct: 28, color: 'bg-blue-400' },
+                    { name: '淘宝/天猫', pct: 20, color: 'bg-amber-400' }
+                ],
+                migrationTag: 'B站深度测评 -> 小红书精致露营圈',
+                aiAttribution: '圈层文化破圈与轻量化趋势',
+                influencerSplit: 'B站户外UP主硬核横评拉动高客单价成交，转化率达 8.4%',
+                trendPoints: [12, 18, 22, 33, 44, 59, 73, 84],
+                aiAdvice: {
+                    timing: '精致露营与山系穿搭人群高度重合，溢价能力强。',
+                    supplyChain: '广东阳江/永康钛制品产业带工艺成熟，可搭配收纳袋捆绑销售。',
+                    risk: '纯钛原材料价格波动，建议锁价批量采购。'
+                }
+            },
+            {
+                id: 'PRD-1006',
+                name: '三合一Qi2磁吸折叠无线快充旅行充电站',
+                category: '3C数码',
+                region: 'overseas',
+                emoji: '🔋',
+                tier: '早期萌芽',
+                acceleration: 6.4,
+                growthRate: '+215%',
+                heat: 81.3,
+                resonanceCount: 3,
+                gmvHourly: 48900,
+                priceRange: '$45.0 - $59.9',
+                platforms: [
+                    { name: 'YouTube', pct: 40, color: 'bg-red-500' },
+                    { name: 'Amazon', pct: 35, color: 'bg-amber-400' },
+                    { name: 'TikTok', pct: 25, color: 'bg-emerald-400' }
+                ],
+                migrationTag: 'YouTube 数码开箱 -> Amazon 搜索飙升',
+                aiAttribution: '新机发布周期配件迭代',
+                influencerSplit: '欧美科技频道开箱推荐，长尾搜索词日环比增长 190%',
+                trendPoints: [10, 14, 19, 26, 39, 51, 67, 81],
+                aiAdvice: {
+                    timing: '早期萌芽高潜阶段，竞争尚未白热化，适合亚马逊精品卖家提前卡位。',
+                    supplyChain: '东莞电源大厂已通过Qi2官方模组认证，注意温控散热方案。',
+                    risk: '需具备WPC Qi2认证及海外安规认证，避免平台下架。'
+                }
+            }
+        ];
+
+        // 模拟突发新爆款池（用于点击“模拟新爆款突发”和左侧脉冲流）
+        const SIMULATED_BURSTS = [
+            {
+                id: 'PRD-9001',
+                name: 'AI智能识物防走失超薄卡片定位器',
+                category: '3C数码',
+                region: 'all',
+                emoji: '🛰️',
+                tier: 'S级核爆',
+                acceleration: 14.2,
+                growthRate: '+690%',
+                heat: 99.4,
+                resonanceCount: 5,
+                gmvHourly: 128000,
+                priceRange: '¥79 - ¥129 / $19.9',
+                platforms: [
+                    { name: 'TikTok', pct: 42, color: 'bg-emerald-400' },
+                    { name: '抖音', pct: 33, color: 'bg-cyan-400' },
+                    { name: 'Amazon', pct: 15, color: 'bg-amber-400' },
+                    { name: '小红书', pct: 10, color: 'bg-rose-400' }
+                ],
+                migrationTag: 'TikTok 爆火 -> 抖音极速跟进',
+                aiAttribution: '差旅防丢痛点短视频病毒传播',
+                influencerSplit: '生活好物与差旅博主集中发布实测寻物视频，单条最高播放 1800W',
+                trendPoints: [10, 15, 22, 31, 49, 72, 91, 100],
+                aiAdvice: {
+                    timing: '刚刚触发S级核爆阈值！全网热度斜率14.2x，建议立即切入。',
+                    supplyChain: '支持Apple Find My生态芯片方案，深圳供应链现货可发。',
+                    risk: '苹果MFi认证合规要求高，务必选择持证代工厂。'
+                }
+            },
+            {
+                id: 'PRD-9002',
+                name: '微电流冰感眼部急救去水肿按摩仪',
+                category: '美妆个护',
+                region: 'domestic',
+                emoji: '❄️',
+                tier: 'S级核爆',
+                acceleration: 12.6,
+                growthRate: '+580%',
+                heat: 97.8,
+                resonanceCount: 4,
+                gmvHourly: 94500,
+                priceRange: '¥129 - ¥189',
+                platforms: [
+                    { name: '抖音', pct: 48, color: 'bg-cyan-400' },
+                    { name: '小红书', pct: 35, color: 'bg-rose-400' },
+                    { name: '快手', pct: 17, color: 'bg-orange-400' }
+                ],
+                migrationTag: '抖音早八人场景 -> 小红书同款热搜',
+                aiAttribution: '早八通勤痛点场景视频破圈',
+                influencerSplit: '美妆垂类达人早起消肿前后对比实拍，投流ROI高达 1:4.2',
+                trendPoints: [14, 19, 27, 39, 55, 76, 89, 98],
+                aiAdvice: {
+                    timing: '爆发初期，直击熬夜党痛点，极易起量。',
+                    supplyChain: '宁波/深圳个人护理小家电产业带，开模周期短。',
+                    risk: '避免医疗器械功效擦边宣传，聚焦“物理冰敷舒缓”。'
+                }
+            }
+        ];
+
+        // 左侧脉冲流基础消息池
+        const PULSE_FEED_SAMPLES = [
+            { platform: '抖音', badgeColor: 'text-cyan-300 bg-cyan-500/20 border-cyan-500/40', product: 'AI同声传译骨传导耳机', metric: '30分钟销量暴涨 +540%', tier: 'S级核爆', tierStyle: 'bg-red-500/20 text-red-300 border-red-500/40', emoji: '🎧', time: '刚刚' },
+            { platform: 'TikTok US', badgeColor: 'text-emerald-300 bg-emerald-500/20 border-emerald-500/40', product: '磁吸悬浮宇航员夜灯音箱', metric: '互动斜率飙升 9.8x', tier: 'A级飙升', tierStyle: 'bg-amber-500/20 text-amber-300 border-amber-500/40', emoji: '🪐', time: '12秒前' },
+            { platform: '小红书', badgeColor: 'text-rose-300 bg-rose-500/20 border-rose-500/40', product: '次抛重组胶原蛋白精华棒', metric: '笔记声量环比 +420%', tier: 'S级核爆', tierStyle: 'bg-red-500/20 text-red-300 border-red-500/40', emoji: '🧪', time: '28秒前' },
+            { platform: 'Amazon US', badgeColor: 'text-amber-300 bg-amber-500/20 border-amber-500/40', product: 'Qi2三合一折叠磁吸快充站', metric: 'BSR榜单跃升 +310名', tier: '早期萌芽', tierStyle: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40', emoji: '🔋', time: '45秒前' },
+            { platform: 'SHEIN', badgeColor: 'text-purple-300 bg-purple-500/20 border-purple-500/40', product: '云感高腰提臀鲨鱼皮瑜伽裤', metric: '加购转化率突破 14.2%', tier: 'A级飙升', tierStyle: 'bg-amber-500/20 text-amber-300 border-amber-500/40', emoji: '🧘‍♀️', time: '1分钟前' },
+            { platform: 'B站', badgeColor: 'text-blue-300 bg-blue-500/20 border-blue-500/40', product: '超轻纯钛户外折叠手冲壶', metric: '测评视频带动搜索 +248%', tier: 'A级飙升', tierStyle: 'bg-amber-500/20 text-amber-300 border-amber-500/40', emoji: '⛺', time: '2分钟前' }
+        ];
+
+        // ==========================================
+        // 2. 应用全局状态管理
+        // ==========================================
+        let currentRegion = 'all';
+        let currentCategory = 'all';
+        let currentSort = 'acceleration';
+        let currentSearch = '';
+        let currentTimeWindow = '1h';
+        let selectedProductId = PRODUCTS_DB[0].id;
+        let savedProductIds = new Set(['PRD-1001', 'PRD-1003']);
+        let isStreamRunning = true;
+        let streamInterval = null;
+        let simBurstIndex = 0;
+
+        // ==========================================
+        // 3. 初始化与渲染逻辑
+        // ==========================================
+        window.onload = function () {
+            initPulseStream();
+            renderRadarTable();
+            selectProduct(selectedProductId);
+            startLiveTelemetry();
+        };
+
+        // 启动顶部遥测数据微跳动（延迟ms与监控总数）
+        function startLiveTelemetry() {
+            setInterval(() => {
+                const latencyEl = document.getElementById('stat-latency');
+                const totalEl = document.getElementById('stat-total-monitored');
+                if (latencyEl) {
+                    const ms = Math.floor(Math.random() * 9) + 14; // 14ms - 22ms
+                    latencyEl.textContent = `${ms}ms`;
+                }
+                if (totalEl) {
+                    const current = parseInt(totalEl.textContent.replace(/,/g, ''), 10);
+                    totalEl.textContent = (current + Math.floor(Math.random() * 15) + 3).toLocaleString();
+                }
+            }, 2500);
+        }
+
+        // 初始化左侧实时脉冲流
+        function initPulseStream() {
+            const container = document.getElementById('pulse-stream-list');
+            container.innerHTML = '';
+            PULSE_FEED_SAMPLES.forEach(item => {
+                container.appendChild(createPulseCardElement(item, false));
+            });
+            startStreamTimer();
+        }
+
+        function startStreamTimer() {
+            if (streamInterval) clearInterval(streamInterval);
+            streamInterval = setInterval(() => {
+                if (!isStreamRunning) return;
+                const randomSample = PULSE_FEED_SAMPLES[Math.floor(Math.random() * PULSE_FEED_SAMPLES.length)];
+                const liveItem = { ...randomSample, time: '刚刚' };
+                prependPulseCard(liveItem, false);
+            }, 3800);
+        }
+
+        function togglePulseStream() {
+            isStreamRunning = !isStreamRunning;
+            const btn = document.getElementById('toggle-stream-btn');
+            if (isStreamRunning) {
+                btn.innerHTML = '⏸ 暂停滚动';
+                btn.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition cursor-pointer';
+            } else {
+                btn.innerHTML = '▶ 恢复滚动';
+                btn.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition cursor-pointer';
+            }
+        }
+
+        function createPulseCardElement(item, isUrgent) {
+            const div = document.createElement('div');
+            div.className = `p-3 rounded-xl border transition-all cursor-pointer hover:border-cyan-400/50 ${
+                isUrgent 
+                ? 'bg-red-950/40 border-red-500/70 animate-flash-alert' 
+                : 'bg-slate-900/75 border-slate-800/90 animate-slide-in'
+            }`;
+            div.innerHTML = `
+                <div class="flex items-center justify-between gap-1.5 mb-1.5">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${item.badgeColor}">${item.platform}</span>
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${item.tierStyle}">${item.tier}</span>
+                </div>
+                <div class="flex items-center gap-2.5 my-1.5">
+                    <div class="w-9 h-9 rounded-lg bg-slate-800/90 border border-slate-700/80 flex items-center justify-center text-lg shrink-0">
+                        ${item.emoji}
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <h4 class="text-xs font-semibold text-slate-100 truncate">${item.product}</h4>
+                        <p class="text-[11px] font-mono font-bold text-amber-400 mt-0.5">${item.metric}</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono pt-1 border-t border-slate-800/60">
+                    <span>实时斜率捕捉</span>
+                    <span class="${item.time === '刚刚' ? 'text-emerald-400' : ''}">${item.time}</span>
+                </div>
+            `;
+            div.onclick = () => {
+                // 尝试在主列表中匹配同名或相近商品并选中
+                const match = PRODUCTS_DB.find(p => item.product.includes(p.name.slice(0, 4)) || p.name.includes(item.product.slice(0, 4)));
+                if (match) {
+                    selectProduct(match.id);
+                    showToast(`已定位情报至：${match.name}`);
+                }
+            };
+            return div;
+        }
+
+        function prependPulseCard(item, isUrgent) {
+            const container = document.getElementById('pulse-stream-list');
+            const card = createPulseCardElement(item, isUrgent);
+            container.insertBefore(card, container.firstChild);
+            if (container.children.length > 25) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        // 生成迷你 SVG 折线图
+        function buildSparklineSVG(points, tier) {
+            const color = tier === 'S级核爆' ? '#EF4444' : (tier === 'A级飙升' ? '#F59E0B' : '#22D3EE');
+            const max = Math.max(...points);
+            const min = Math.min(...points);
+            const range = max - min || 1;
+            const width = 88;
+            const height = 28;
+
+            const coords = points.map((val, idx) => {
+                const x = (idx / (points.length - 1)) * width;
+                const y = height - ((val - min) / range) * (height - 6) - 3;
+                return `${x.toFixed(1)},${y.toFixed(1)}`;
+            }).join(' ');
+
+            return `
+                <svg class="w-22 h-7 overflow-visible" viewBox="0 0 ${width} ${height}">
+                    <polyline fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${coords}" />
+                </svg>
+            `;
+        }
+
+        // 渲染中间核心区爆款监控主列表
+        function renderRadarTable() {
+            const tbody = document.getElementById('radar-table-body');
+            let filtered = PRODUCTS_DB.filter(item => {
+                const matchRegion = currentRegion === 'all' || item.region === 'all' || item.region === currentRegion;
+                const matchCat = currentCategory === 'all' || item.category === currentCategory;
+                const q = currentSearch.toLowerCase();
+                const matchSearch = !q || 
+                    item.name.toLowerCase().includes(q) || 
+                    item.category.toLowerCase().includes(q) || 
+                    item.migrationTag.toLowerCase().includes(q) ||
+                    item.aiAttribution.toLowerCase().includes(q) ||
+                    item.platforms.some(p => p.name.toLowerCase().includes(q));
+                return matchRegion && matchCat && matchSearch;
+            });
+
+            // 排序逻辑
+            filtered.sort((a, b) => {
+                if (currentSort === 'acceleration') return b.acceleration - a.acceleration;
+                if (currentSort === 'heat') return b.heat - a.heat;
+                if (currentSort === 'resonance') return b.resonanceCount - a.resonanceCount;
+                if (currentSort === 'gmv') return b.gmvHourly - a.gmvHourly;
+                return 0;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-12 text-center text-slate-400">
+                            未匹配到符合当前过滤条件的监控商品，请尝试切换阵地或清空搜索词。
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((item, idx) => {
+                const isSelected = item.id === selectedProductId;
+                const isSaved = savedProductIds.has(item.id);
+                const rankBadge = idx === 0 
+                    ? 'bg-red-500/20 text-red-400 border-red-500/40' 
+                    : (idx === 1 ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' : 'bg-slate-800 text-slate-300 border-slate-700');
+
+                const tierBadge = item.tier === 'S级核爆'
+                    ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                    : (item.tier === 'A级飙升' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40');
+
+                return `
+                    <tr onclick="selectProduct('${item.id}')" class="group transition cursor-pointer ${isSelected ? 'bg-cyan-500/10 border-l-2 border-l-cyan-400' : 'hover:bg-slate-800/40'} ${item.isNewBurst ? 'animate-flash-alert' : ''}">
+                        <!-- 排名与趋势 -->
+                        <td class="py-3 pl-4 pr-2 align-middle">
+                            <div class="flex items-center gap-1.5 font-mono">
+                                <span class="w-6 h-6 rounded-md border flex items-center justify-center font-bold text-xs ${rankBadge}">${idx + 1}</span>
+                                <span class="text-emerald-400 text-[10px]">▲</span>
+                            </div>
+                        </td>
+
+                        <!-- 商品信息与多平台联动 -->
+                        <td class="py-3 px-3 align-middle">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-700/80 flex items-center justify-center text-xl shrink-0">
+                                    ${item.emoji}
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="font-semibold text-slate-100 group-hover:text-cyan-300 transition truncate max-w-[190px] sm:max-w-[230px]">${item.name}</span>
+                                        <span class="px-1.5 py-0.2 rounded text-[10px] font-mono border ${tierBadge}">${item.tier}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">${item.category}</span>
+                                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 font-mono">⇄ ${item.migrationTag}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- 实时热度曲线 -->
+                        <td class="py-3 px-2 align-middle hidden sm:table-cell">
+                            <div class="flex flex-col items-start">
+                                ${buildSparklineSVG(item.trendPoints, item.tier)}
+                                <span class="text-[10px] font-mono text-slate-400 mt-0.5">热度值: <strong class="text-slate-200">${item.heat}</strong></span>
+                            </div>
+                        </td>
+
+                        <!-- 加速度 / 增速 -->
+                        <td class="py-3 px-2 align-middle text-right font-mono">
+                            <div class="text-sm font-bold ${item.acceleration >= 9 ? 'text-red-400' : 'text-amber-400'}">${item.acceleration.toFixed(1)}x</div>
+                            <div class="text-[11px] text-emerald-400">${item.growthRate}</div>
+                            <div class="text-[10px] text-slate-400">GMV $${(item.gmvHourly / 1000).toFixed(1)}k/h</div>
+                        </td>
+
+                        <!-- AI 归因标签 -->
+                        <td class="py-3 px-3 align-middle hidden md:table-cell">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] bg-purple-500/10 text-purple-300 border border-purple-500/25">
+                                <span>✦</span> ${item.aiAttribution}
+                            </span>
+                        </td>
+
+                        <!-- 操作按钮 -->
+                        <td class="py-3 pl-2 pr-4 align-middle text-right" onclick="event.stopPropagation()">
+                            <div class="flex items-center justify-end gap-1.5">
+                                <button onclick="openProductModal('${item.id}')" title="查看多维详情报告" class="px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 border border-slate-700 hover:border-cyan-500/40 text-[11px] transition cursor-pointer">
+                                    详情
+                                </button>
+                                <button onclick="toggleSaveProduct('${item.id}')" title="加入/移出选品库" class="px-2 py-1.5 rounded-lg border text-[11px] transition cursor-pointer ${isSaved ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'}">
+                                    ${isSaved ? '★ 已存' : '☆ 选品'}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
+        // 4. 右侧情报舱联动更新
+        // ==========================================
+        function selectProduct(id) {
+            selectedProductId = id;
+            renderRadarTable(); // 更新行高亮
+
+            const product = PRODUCTS_DB.find(p => p.id === id);
+            if (!product) return;
+
+            // 更新头部
+            document.getElementById('intel-header').innerHTML = `
+                <div class="w-12 h-12 rounded-xl bg-slate-800 border border-cyan-500/30 flex items-center justify-center text-2xl shrink-0">
+                    ${product.emoji}
+                </div>
+                <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] font-mono text-cyan-400">${product.id}</span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-red-500/20 text-red-300 font-mono">${product.tier}</span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white leading-snug mt-0.5">${product.name}</h4>
+                    <p class="text-[11px] text-slate-400 mt-0.5">主力价格带: <span class="text-slate-200 font-mono">${product.priceRange}</span></p>
+                </div>
+            `;
+
+            // 更新共振标签与平台分布条
+            document.getElementById('intel-resonance-badge').textContent = `${product.resonanceCount}大平台共振`;
+            document.getElementById('intel-platform-bars').innerHTML = product.platforms.map(pl => `
+                <div>
+                    <div class="flex justify-between text-[11px] mb-0.5">
+                        <span class="text-slate-300">${pl.name}</span>
+                        <span class="font-mono text-slate-400">${pl.pct}%</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="${pl.color} h-full rounded-full transition-all duration-500" style="width: ${pl.pct}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // 更新达人与GMV网格
+            document.getElementById('intel-metrics-grid').innerHTML = `
+                <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-2">
+                    <span class="text-[10px] text-slate-400 block">爆发斜率加速度</span>
+                    <span class="font-mono font-bold text-sm text-amber-400">${product.acceleration}x <span class="text-[10px] text-emerald-400">(${product.growthRate})</span></span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-2">
+                    <span class="text-[10px] text-slate-400 block">预估小时 GMV</span>
+                    <span class="font-mono font-bold text-sm text-cyan-400">$${product.gmvHourly.toLocaleString()}</span>
+                </div>
+                <div class="col-span-2 bg-slate-900/90 border border-slate-800 rounded-lg p-2">
+                    <span class="text-[10px] text-slate-400 block mb-0.5">达人带货矩阵分布</span>
+                    <span class="text-[11px] text-slate-200 leading-relaxed">${product.influencerSplit}</span>
+                </div>
+            `;
+
+            // 更新AI决策建议
+            document.getElementById('intel-ai-advice').innerHTML = `
+                <div class="flex items-center gap-1.5 text-cyan-300 font-bold">
+                    <span>🤖 AI 作战室选品决策建议</span>
+                </div>
+                <p class="text-slate-300 leading-relaxed"><strong class="text-emerald-400">[切入时机]</strong> ${product.aiAdvice.timing}</p>
+                <p class="text-slate-300 leading-relaxed"><strong class="text-amber-400">[供应链建议]</strong> ${product.aiAdvice.supplyChain}</p>
+                <p class="text-slate-300 leading-relaxed"><strong class="text-red-400">[风控提示]</strong> ${product.aiAdvice.risk}</p>
+            `;
+        }
+
+        // ==========================================
+        // 5. 交互操作：模拟新爆款突发 & 筛选器
+        // ==========================================
+        function triggerSimulatedBurst() {
+            const burstTemplate = SIMULATED_BURSTS[simBurstIndex % SIMULATED_BURSTS.length];
+            simBurstIndex++;
+
+            // 克隆并生成唯一ID防止重复冲突
+            const newProduct = {
+                ...burstTemplate,
+                id: 'PRD-' + Math.floor(1000 + Math.random() * 8999),
+                isNewBurst: true
+            };
+
+            // 插入主列表最顶部
+            PRODUCTS_DB.unshift(newProduct);
+
+            // 更新顶部KPI数字
+            const kpiEl = document.getElementById('kpi-s-tier');
+            if (kpiEl) {
+                const cur = parseInt(kpiEl.textContent, 10) || 27;
+                kpiEl.innerHTML = `${cur + 1}<span class="text-xs text-slate-400 ml-1">款</span>`;
+            }
+
+            // 左侧脉冲流同步弹出红色预警卡片
+            prependPulseCard({
+                platform: newProduct.platforms[0].name,
+                badgeColor: 'text-red-200 bg-red-500/30 border-red-400/60',
+                product: newProduct.name,
+                metric: `突发加速度 ${newProduct.acceleration}x (${newProduct.growthRate})`,
+                tier: 'S级核爆',
+                tierStyle: 'bg-red-500/30 text-red-200 border-red-400/60',
+                emoji: newProduct.emoji,
+                time: '刚刚'
+            }, true);
+
+            // 显示顶部红色高亮预警横幅
+            const banner = document.getElementById('urgent-banner');
+            const bannerText = document.getElementById('urgent-banner-text');
+            bannerText.textContent = `捕捉到突发爆款：【${newProduct.name}】在 ${newProduct.migrationTag} 斜率突破 ${newProduct.acceleration}x！`;
+            banner.classList.remove('hidden');
+
+            // 选中该爆款并重新渲染
+            selectProduct(newProduct.id);
+
+            // 6秒后自动收起顶部横幅
+            setTimeout(() => {
+                banner.classList.add('hidden');
+            }, 6500);
+        }
+
+        function dismissBanner() {
+            document.getElementById('urgent-banner').classList.add('hidden');
+        }
+
+        function setRegionFilter(region) {
+            currentRegion = region;
+            document.querySelectorAll('.region-tab').forEach(btn => {
+                btn.className = 'region-tab px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer';
+            });
+            const activeBtn = document.getElementById(`tab-${region}`);
+            activeBtn.className = 'region-tab active px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 whitespace-nowrap cursor-pointer';
+            renderRadarTable();
+        }
+
+        function setCategoryFilter(category) {
+            currentCategory = category;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.textContent.trim() === (category === 'all' ? '全部类目' : category)) {
+                    btn.className = 'cat-btn active px-2.5 py-1 rounded-lg text-xs font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 whitespace-nowrap cursor-pointer';
+                } else {
+                    btn.className = 'cat-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-800/60 whitespace-nowrap cursor-pointer';
+                }
+            });
+            renderRadarTable();
+        }
+
+        function setTimeWindow(win) {
+            currentTimeWindow = win;
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                if (btn.textContent.trim().toLowerCase() === win) {
+                    btn.className = 'time-btn active px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-semibold transition cursor-pointer';
+                } else {
+                    btn.className = 'time-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer';
+                }
+            });
+            showToast(`已切换监听时间窗口至近 ${win.toUpperCase()}`);
+            renderRadarTable();
+        }
+
+        function handleSort() {
+            currentSort = document.getElementById('sort-select').value;
+            renderRadarTable();
+        }
+
+        function handleSearch() {
+            currentSearch = document.getElementById('search-input').value.trim();
+            renderRadarTable();
+        }
+
+        function quickSearch(keyword) {
+            const input = document.getElementById('search-input');
+            input.value = keyword;
+            currentSearch = keyword;
+            renderRadarTable();
+            showToast(`已过滤关键词: #${keyword}`);
+        }
+
+        // ==========================================
+        // 6. 详情报告弹窗与选品库管理
+        // ==========================================
+        function openProductModal(id) {
+            const p = PRODUCTS_DB.find(item => item.id === id);
+            if (!p) return;
+
+            document.getElementById('modal-title').textContent = `${p.emoji} ${p.name} - 爆款监控深度报告`;
+            document.getElementById('modal-body').innerHTML = `
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 block text-[11px]">爆发加速度</span>
+                        <span class="text-lg font-mono font-bold text-red-400">${p.acceleration}x</span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 block text-[11px]">声量/销量增速</span>
+                        <span class="text-lg font-mono font-bold text-emerald-400">${p.growthRate}</span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 block text-[11px]">跨平台共振</span>
+                        <span class="text-lg font-mono font-bold text-cyan-400">${p.resonanceCount} 平台</span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 block text-[11px]">预估小时 GMV</span>
+                        <span class="text-lg font-mono font-bold text-amber-400">$${p.gmvHourly.toLocaleString()}</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="font-bold text-cyan-300">1. 跨平台传播路径与归因</h4>
+                    <p class="text-slate-300"><strong>迁移链路：</strong>${p.migrationTag}</p>
+                    <p class="text-slate-300"><strong>核心爆点归因：</strong>${p.aiAttribution}</p>
+                    <p class="text-slate-300"><strong>达人带货结构：</strong>${p.influencerSplit}</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-3.5 rounded-xl border border-cyan-500/30 space-y-2">
+                    <h4 class="font-bold text-amber-400">2. AI 选品与供应链执行策略</h4>
+                    <p class="text-slate-300"><strong>切入时机：</strong>${p.aiAdvice.timing}</p>
+                    <p class="text-slate-300"><strong>供应链建议：</strong>${p.aiAdvice.supplyChain}</p>
+                    <p class="text-slate-300"><strong>合规与风险提示：</strong>${p.aiAdvice.risk}</p>
+                </div>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function exportReportText() {
+            const p = PRODUCTS_DB.find(item => item.id === selectedProductId);
+            if (!p) return;
+            const summary = `【启源·爆款情报简报】\n商品：${p.name} (${p.tier})\n加速度：${p.acceleration}x | 增速：${p.growthRate}\n迁移路径：${p.migrationTag}\n切入建议：${p.aiAdvice.timing}`;
+            
+            // 使用兼容性最佳的 execCommand 复制剪贴板
+            const textarea = document.createElement('textarea');
+            textarea.value = summary;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('监控简报已复制到剪贴板！');
+            } catch (e) {
+                showToast('简报生成完成');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function toggleSaveProduct(id) {
+            if (savedProductIds.has(id)) {
+                savedProductIds.delete(id);
+                showToast('已从选品库移除');
+            } else {
+                savedProductIds.add(id);
+                showToast('⭐ 已加入作战室选品库');
+            }
+            document.getElementById('saved-count-badge').textContent = savedProductIds.size;
+            renderRadarTable();
+        }
+
+        function openSavedModal() {
+            const container = document.getElementById('saved-list-container');
+            document.getElementById('modal-saved-count').textContent = savedProductIds.size;
+
+            if (savedProductIds.size === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 py-8">选品库暂无商品，点击列表右侧“☆ 选品”即可收藏跟进。</p>`;
+            } else {
+                const items = PRODUCTS_DB.filter(p => savedProductIds.has(p.id));
+                container.innerHTML = items.map(p => `
+                    <div class="flex items-center justify-between bg-slate-900/90 border border-slate-800 p-3 rounded-xl">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-xl">${p.emoji}</span>
+                            <div>
+                                <div class="font-semibold text-slate-100">${p.name}</div>
+                                <div class="text-[11px] text-slate-400 font-mono">${p.tier} · 加速度 ${p.acceleration}x · ${p.priceRange}</div>
+                            </div>
+                        </div>
+                        <button onclick="toggleSaveProduct('${p.id}'); openSavedModal();" class="text-red-400 hover:text-red-300 px-2 py-1 rounded bg-red-500/10 text-[11px] cursor-pointer">移除</button>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('saved-modal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2600);
+        }
+    
+        // ===== GENESIS 联动桥：真后端 -> V1 丰满字段（同作用域，原地换血）=====
+        (function genesisSync(){
+            var API = 'http://127.0.0.1:8000/api/radar/stream?sort_by=heat_score';
+            function pickCat(t){
+                if(/耳机|充电|蓝牙|数码|手机|电器|音响|智能|手表|手环|摄像|数据线|键盘|鼠标|音箱|屏/.test(t)) return '3C数码';
+                if(/美妆|护肤|口红|面膜|香水|个护|洗面|膏|霜|美容|精华|精油|牙刷/.test(t)) return '美妆个护';
+                if(/衣|裤|鞋|包|服|穿|袜|帽|饰|套/.test(t)) return '服饰鞋包';
+                return '家居百货';
+            }
+            function emojiFor(c){
+                return {'3C数码':'🎧','美妆个护':'💄','家居百货':'🏠','服饰鞋包':'👗'}[c] || '📦';
+            }
+            var COLOR = ['bg-cyan-400','bg-emerald-400','bg-rose-400','bg-amber-400'];
+            var POOL = ['抖音','TikTok','小红书','1688','Amazon','Temu','Shopee'];
+
+            function numOf(g){ var m=String(g||'').match(/-?[0-9.]+/); return m?parseFloat(m[0]):0; }
+            function renderKPI(d){
+                var n=d.length; if(!n) return;
+                var avgHeat=d.reduce(function(a,x){return a+(x.heat||0);},0)/n;
+                var avgGrowth=d.reduce(function(a,x){return a+numOf(x.growthRate);},0)/n;
+                var sCnt=d.filter(function(x){return /S级/.test(x.tier||'');}).length;
+                var sumGmv=d.reduce(function(a,x){return a+(x.gmvHourly||0);},0);
+                var multi=d.filter(function(x){return (x.platforms||[]).length>=2;}).length;
+                var set=function(id,v){var e=document.getElementById(id); if(e) e.textContent=v;};
+                set('kpi-voice-pts', Math.round(avgHeat));
+                set('kpi-voice-pct', '+' + Math.round(avgGrowth) + '%');
+                set('kpi-sku', n);
+                set('kpi-reson-pct', '+' + multi + '款');
+                set('kpi-stier-num', sCnt);
+                set('kpi-gmv', (sumGmv/1000000).toFixed(2));
+                set('kpi-gmv-pct', '+' + Math.round(avgGrowth) + '%');
+            }
+            function tierStyleOf(t){
+                if(/S级/.test(t)) return 'bg-red-500/20 text-red-300 border-red-500/40';
+                if(/A级/.test(t)) return 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+                return 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40';
+            }
+            function badgeOf(p){
+                var m={'抖音':'text-cyan-300 bg-cyan-500/20 border-cyan-500/40','TikTok':'text-emerald-300 bg-emerald-500/20 border-emerald-500/40','小红书':'text-rose-300 bg-rose-500/20 border-rose-500/40','1688':'text-amber-300 bg-amber-500/20 border-amber-500/40','Amazon':'text-orange-300 bg-orange-500/20 border-orange-500/40','Temu':'text-purple-300 bg-purple-500/20 border-purple-500/40'};
+                return m[p] || 'text-slate-300 bg-slate-500/20 border-slate-500/40';
+            }
+            function renderPulse(d){
+                var top=d.slice(0,8);
+                var items=top.map(function(x){
+                    var plat=(x.platforms && x.platforms[0]) ? x.platforms[0].name : '多平台';
+                    return {platform:plat, badgeColor:badgeOf(plat), product:x.name,
+                            metric:'热度 '+Math.round(x.heat||0)+' · '+x.growthRate,
+                            tier:x.tier, tierStyle:tierStyleOf(x.tier||''), emoji:x.emoji||'📦', time:'刚刚'};
+                });
+                if(typeof PULSE_FEED_SAMPLES!=='undefined'){
+                    PULSE_FEED_SAMPLES.splice(0,PULSE_FEED_SAMPLES.length);
+                    for(var i=0;i<items.length;i++) PULSE_FEED_SAMPLES.push(items[i]);
+                }
+                var box=document.getElementById('pulse-stream-list');
+                if(box && typeof createPulseCardElement==='function'){
+                    box.innerHTML='';
+                    items.forEach(function(it){ box.appendChild(createPulseCardElement(it,false)); });
+                }
+            }
+            function renderWordcloud(d){
+                var box=document.getElementById('wordcloud-tags'); if(!box) return;
+                // 如实展示: 取热度最高的真标题,凝练成话题标签,不编造百分比
+                var tops = d.slice(0,6).map(function(x){
+                    var t=(x.name||'').replace(/\s+/g,' ').trim();
+                    // 去掉平台的尾巴噪音
+                    t=t.replace(/[，,。.！!；;].*$/,'').trim();
+                    if(t.length>18) t=t.slice(0,18)+'…';
+                    return {title:t, tier:x.tier||'', heat:Math.round(x.heat||0), search:(x.name||'').slice(0,6)};
+                });
+                var colorByTier=function(t){
+                    if(/S级/.test(t)) return ['bg-red-500/15 text-red-300 border-red-500/30','hover:bg-red-500/25'];
+                    if(/A级/.test(t)) return ['bg-amber-500/15 text-amber-300 border-amber-500/30','hover:bg-amber-500/25'];
+                    return ['bg-cyan-500/15 text-cyan-300 border-cyan-500/30','hover:bg-cyan-500/25'];
+                };
+                box.innerHTML=tops.map(function(o){
+                    var cs=colorByTier(o.tier);
+                    var safeSearch=o.search.replace(/'/g,'');
+                    return '<span onclick="quickSearch(\''+safeSearch+'\')" title="热度 '+o.heat+' · 真采标题" class="px-2 py-1 rounded-md text-[11px] font-medium border cursor-pointer transition '+cs[0]+' '+cs[1]+'">'+o.title+'</span>';
+                }).join('');
+            }
+            function renderCategoryBars(d){
+                var box=document.getElementById('category-bars'); if(!box) return;
+                // 按类目聚合真实平均热度
+                var agg={};
+                d.forEach(function(x){
+                    var c=x.category||'其他';
+                    if(!agg[c]) agg[c]={sum:0,n:0,label:c};
+                    agg[c].sum+=(x.heat||0); agg[c].n++;
+                });
+                var names={'3C数码':'智能穿戴与AI硬件','美妆个护':'功效型个护美妆','家居百货':'家居日用与氛围','服饰鞋包':'服饰鞋包趋势'};
+                var colors={'3C数码':['from-cyan-500 to-blue-500','text-cyan-400'],'美妆个护':['from-amber-500 to-orange-500','text-amber-400'],'家居百货':['from-emerald-500 to-teal-500','text-emerald-400'],'服饰鞋包':['from-rose-500 to-pink-500','text-rose-400']};
+                var arr=Object.keys(agg).map(function(c){ return {cat:c, avg:agg[c].sum/agg[c].n, n:agg[c].n}; });
+                arr.sort(function(a,b){return b.avg-a.avg;});
+                box.innerHTML=arr.map(function(o){
+                    var col=colors[o.cat]||['from-slate-500 to-slate-400','text-slate-400'];
+                    var nm=names[o.cat]||o.cat;
+                    var sc=Math.round(o.avg);
+                    return '<div><div class="flex justify-between mb-1"><span class="text-slate-300">'+nm+' ('+o.cat+') · '+o.n+'条</span><span class="font-mono '+col[1]+'">'+sc+' 分</span></div><div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden"><div class="bg-gradient-to-r '+col[0]+' h-full rounded-full" style="width: '+sc+'%"></div></div></div>';
+                }).join('');
+            }
+            function adapt(x, i){
+                var cat = x.category || pickCat(x.title || '');
+                var regMap = {CN:'domestic', GLOBAL:'overseas'};
+                var tierMap = {S:'S级核爆', A:'A级爆发', B:'B级潜力'};
+                var rates = [52,31,17][i%3] ? [52,31,17] : [52,31,17];
+                var split = [[52,31,17],[61,24,15],[45,35,20]][i%3];
+                var others = POOL.filter(function(p){return p!==x.platform;});
+                var plats = split.map(function(pct, idx){
+                    return { name: idx===0 ? x.platform : (others[idx-1] || '其他'), pct: pct, color: COLOR[idx] };
+                });
+                var acc = +( (x.surge_rate || 80) / 30 ).toFixed(1);
+                return {
+                    id: x.id,
+                    name: x.title,
+                    category: cat,
+                    region: regMap[x.region] || 'all',
+                    emoji: emojiFor(cat),
+                    tier: tierMap[x.level] || 'B级潜力',
+                    acceleration: acc,
+                    growthRate: '+' + (x.surge_rate||0) + '%',
+                    heat: x.heat_score,
+                    resonanceCount: Math.max(2, Math.round((x.heat_score||70)/20)),
+                    gmvHourly: Math.round((x.heat_score||70) * 820),
+                    priceRange: x.price || '—',
+                    platforms: plats,
+                    aiAdvice: {
+                        timing: '真采信号触发，' + x.platform + ' 端热度斜率走高，建议本周内跟进测款。',
+                        supplyChain: '信号来源：' + (x.ai_advice || '').slice(0, 60) + '（供应链需自行核验）',
+                        risk: '模型估算·非平台实时榜；跨平台套利前请核实专利与合规。'
+                    },
+                    aiAttribution: '真采信号 · ' + x.platform + ' 情报源',
+                    migrationTag: (x.migration_path || []).join(' · '),
+                    influencerSplit: '模型估算',
+                    trendPoints: x.trend_history || [40,52,60,68,75,82,90]
+                };
+            }
+            function apply(data){
+                if(!data || !data.length) return;
+                var adapted = data.map(adapt);
+                PRODUCTS_DB.splice(0, PRODUCTS_DB.length);
+                for(var k=0;k<adapted.length;k++) PRODUCTS_DB.push(adapted[k]);
+                selectedProductId = PRODUCTS_DB[0].id;
+                renderRadarTable();
+                renderKPI(PRODUCTS_DB);
+                renderPulse(PRODUCTS_DB);
+                renderWordcloud(PRODUCTS_DB);
+                renderCategoryBars(PRODUCTS_DB);
+                selectProduct(selectedProductId);
+                var totalEl = document.getElementById('stat-total-monitored');
+                if(totalEl) totalEl.textContent = PRODUCTS_DB.length;
+                if(typeof showToast === 'function'){
+                    showToast('● 真数据 ONLINE：已接入 ' + PRODUCTS_DB.length + ' 条实时信号');
+                }
+                console.log('[genesis] injected ' + data.length + ' real signals');
+            }
+            if(window.__SNAPSHOT__ && window.__SNAPSHOT__.data && window.__SNAPSHOT__.data.length){
+                apply(window.__SNAPSHOT__.data);
+                document.title = '[快照] ' + document.title;
+                var _st=document.getElementById('stat-total-monitored');
+                if(typeof showToast==='function'){ showToast('● 快照数据：载入 ' + window.__SNAPSHOT__.data.length + ' 条信号（生成于 ' + (window.__SNAPSHOT__.updated? new Date(window.__SNAPSHOT__.updated*1000).toLocaleString('zh-CN'):'—') + '）'); }
+            }
+            fetch(API).then(function(r){return r.json();}).then(function(d){
+                apply(d.data);
+                document.title = '[LIVE] ' + document.title;
+            }).catch(function(e){
+                console.warn('[genesis] backend offline, keep demo data', e);
+                if(typeof showToast === 'function'){ showToast('⚠ 后端未连，当前为演示数据'); }
+            });
+
+            // ===== 哨兵：定时自动刷新 + S级新信号弹通知 =====
+            var _seenIds = {};            // 已知商品 id 集合
+            var _firstLoad = true;
+            var POLL_MS = 90000;          // 每 90 秒
+            var TRIGGER_MS = 480000;      // 每 8 分钟触发后端真采一次
+            function bellNotify(title, body){
+                try {
+                    if(window.Notification && Notification.permission === 'granted'){
+                        new Notification(title, {body: body});
+                    }
+                } catch(e){}
+                if(typeof showToast === 'function'){ showToast('🔔 '+title+'：'+body); }
+            }
+            function ensureNotifyPerm(){
+                try{
+                    if(window.Notification && Notification.permission === 'default'){
+                        Notification.requestPermission();
+                    }
+                }catch(e){}
+            }
+            function pollOnce(){
+                fetch(API).then(function(r){return r.json();}).then(function(d){
+                    apply(d.data);                     // 重渲全屏(真数据)
+                    var cur = d.data || [];
+                    if(!_firstLoad){
+                        // 找本次新出现的 S 级商品
+                        var fresh = cur.filter(function(x){
+                            return x.level === 'S' && !_seenIds[x.id];
+                        });
+                        fresh.forEach(function(x){
+                            bellNotify('S级核爆新信号', (x.title||'').slice(0,40) + ' · ' + (x.platform||''));
+                        });
+                    }
+                    // 更新已知集合
+                    _seenIds = {};
+                    cur.forEach(function(x){ _seenIds[x.id] = 1; });
+                    _firstLoad = false;
+                }).catch(function(e){ console.warn('[sentinel] poll fail', e); });
+            }
+            function triggerBackend(){
+                fetch(API.replace('/stream','/trigger').replace(/\?.*$/,''), {method:'POST'})
+                    .catch(function(){});
+            }
+            // 启动哨兵
+            if(!(window.__SNAPSHOT__ && window.__SNAPSHOT__.data && window.__SNAPSHOT__.data.length)){
+                ensureNotifyPerm();
+                setInterval(pollOnce, POLL_MS);
+                setInterval(triggerBackend, TRIGGER_MS);
+            } else { console.log('[portable] snapshot mode: 定时哨兵已禁用'); }
+            console.log('[sentinel] armed: poll '+POLL_MS/1000+'s, trigger '+TRIGGER_MS/60000+'min');
+        })();
+
+    </script>
+</body>
+</html>
